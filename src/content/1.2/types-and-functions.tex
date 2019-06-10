@@ -1,15 +1,11 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{T}{he category of types and functions} plays an important role in
-programming, so let's talk about what types are and why we need them.
+함수와 타입 \trCategory\는  프로그래밍에서 중요한 역할을 담당한다. 그러니 타입이 무엇이고 언제 그것이 필요한지 얘기해보자.
 
-\section{Who Needs Types?}
+\section{타입이 누구에게 필요한가?}
 
-There seems to be some controversy about the advantages of static vs.
-dynamic and strong vs. weak typing. Let me illustrate these choices with
-a thought experiment. Imagine millions of monkeys at computer keyboards
-happily hitting random keys, producing programs, compiling, and running
-them.
+정적 타입 vs 동적 타입, 강 타입 vs 약 타입 각각의 이점에 관해 약간의 논란이 있는 것 같다.
+각각의 선택을 사고 실험을 통해 표현해보자. 수백만 마리의 원숭이가 컴퓨터 키보드 앞에서 아무 키나 랜덤하게 누르고, 프로그램을 작성하고, 컴파일하고, 실행하고 있다.
 
 \begin{figure}[H]
 \centering
@@ -17,28 +13,24 @@ them.
 \end{figure}
 
 \noindent
-With machine language, any combination of bytes produced by monkeys
-would be accepted and run. But with higher level languages, we do
-appreciate the fact that a compiler is able to detect lexical and
-grammatical errors. Lots of monkeys will go without bananas, but the
-remaining programs will have a better chance of being useful. Type
-checking provides yet another barrier against nonsensical programs.
-Moreover, whereas in a dynamically typed language, type mismatches would
-be discovered at runtime, in strongly typed statically checked languages
-type mismatches are discovered at compile time, eliminating lots of
-incorrect programs before they have a chance to run.
+기계어의 경우, 원숭이들이 만든 어떤 종류의 바이트열 조합도 허용되며 실행될 수 있다.
+하지만 좀 더 고수준 언어의 경우, 컴파일러가 어휘적(lexical), 문법적 오류를 잡아낼 수 있다는 사실에 감사할 수 있을 것이다.
+많은 원숭이들이 바나나 없이 떠나게 되겠지만, 남은 프로그램들은 유용해질 수 있는 좀 더 나은 기회를 갖게 될 것이다.
+타입 검사는 무의미한 프로그램에 대한 또다른 방어책을 제공해준다.
+더 나아가, 타입 불일치를 실행 중에만 감지할 수 있는 동적 타입 언어와 다르게 정적 타입 언어는 이를 컴파일 타임에 잡아낼 수 있게 해 준다.
+실행하기 전에 수많은 잘못된 프로그램을 잡아낼 기회를 제공하는 것이다.
 
-So the question is, do we want to make monkeys happy, or do we want to
-produce correct programs?
+그래서 질문은 이거다. 우리는 원숭이를 행복하게 하기를 바라는 걸까, 아니면 올바른 프로그램을 만들어내길 원하는 걸까?
 
-The usual goal in the typing monkeys thought experiment is the
-production of the complete works of Shakespeare. Having a spell checker
-and a grammar checker in the loop would drastically increase the odds.
-The analog of a type checker would go even further by making sure that,
-once Romeo is declared a human being, he doesn't sprout leaves or trap
-photons in his powerful gravitational field.
+타이핑하는 원숭이 사고실험의 일반적인 목표는 셰익스피어 작품을 완벽하게 만들어내는 것이다.
+이 반복에서 맞춤법 검사기와 문법 검사기를 갖게 되는 것은 성공 가능성을 엄청나게 증가시킨다.
+타입 검사기와 비슷한 것이 있다면, 로미오가 사람으로 선언될 경우 그에게서 나뭇잎이 자라나거나, 그의 강력한 중력장이 광자(photon)를 붙잡아두게 된다거나 하지 못하게 만듦으로써 더욱 멀리까지 나아갈 수 있을 것이다.
 
-\section{Types Are About Composability}
+\section{타입은 \trComposability}에 관한 것}
+
+\trCategoryTheory이란 곧 \trArrow\를 합성하는 것이다. 하지만 어느 두 \trArrow도 합성될 수 없다. 
+한 \trArrow의 \trTargetObject\는 반드시 다음 \trArrow의 \trSourceObjectn와 같아야만 한다.
+프로그래밍에서 우리는 한 함수의 결과를 다른 함수로 전달할 수 있다.
 
 Category theory is about composing arrows. But not any two arrows can be
 composed. The target object of one arrow must be the same as the source
