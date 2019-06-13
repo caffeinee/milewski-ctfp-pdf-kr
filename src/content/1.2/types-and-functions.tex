@@ -83,48 +83,29 @@ functionality.
 우리는 이제 이 값이 정수 집합의 한 원소라고 얘기할 수 있다.
 하스켈에서 \code{Integer}는 무한 집합이며, 임의 크기의 산술 연산을 하는데 사용될 수 있다. \code{Int}라는 유한한 크기의 집합도 있는데 이는 C++의 \code{int}처럼 동작하는 기기에 부합하는 크기를 가진다.
 
+타입과 집합에서 이런 방식의 구분을 까다롭게 만드는 구석이 있다.
+재귀적인 정의를 포함하는 \trPolymorphic(polymorphic) 함수를 쓸 경우, 모든 집합에 대한 집합을 정의할 수 없다는 문제가 있는 것이다.
+물론 앞서 예기했 듯 수학적으로 까다롭게 굴 생각은 없다. 중요한 것은 $\Set$이라고 불리는 집합의 \trCategory가 있으며, 우리는 이것을 다룰 것이라는 사실이다.
+$\Set$에서, 모든 \trObject\는 집합이며 모든 \trMorphism(\trArrow)\은 함수이다.
 
-There are some subtleties that make this identification of types and
-sets tricky. There are problems with polymorphic functions that involve
-circular definitions, and with the fact that you can't have a set of all
-sets; but as I promised, I won't be a stickler for math. The great thing
-is that there is a category of sets, which is called $\Set$, and
-we'll just work with it. In $\Set$, objects are sets and morphisms
-(arrows) are functions.
+$\Set$은 아주 특별한 \trCategory다. 왜냐하면 이 \trCategory의 \trObject 내부에 있는 것을 실제로 꺼내 볼 수 있고, 이로부터 많은 직관을 얻을 수 있기 때문이다.
+예를 들어, 우리는 공집합은 어떤 원소도 포함하지 않는다는 것을 안다. 우리는 원소가 하나밖에 없는 특별한 집합이 있다는 것을 알고, 어떤 집합의 원소를 다른 집합의 원소와 대응시키는 함수가 있다는 것을 안다.
+이 함수는 서로 다른 두 원소를 어느 한 원소에 대응시킬 순 있지만, 하나의 원소를 두 원소에 대응시킬 수는 없다.
+우리는 어떤 집합의 원소를 그 원소 자신과 대응시키는 항등 함수가 있다는 사실 등도 알고 있다.
+목표는 이 모든 지식을 천천히 잃어버리고, 대신에 순수하게 \trCategory의 용어, 그러니까 \trObject와 \trArrow로 표현하게 되는 것이다.
 
-$\Set$ is a very special category, because we can actually peek
-inside its objects and get a lot of intuitions from doing that. For
-instance, we know that an empty set has no elements. We know that there
-are special one-element sets. We know that functions map elements of one
-set to elements of another set. They can map two elements to one, but
-not one element to two. We know that an identity function maps each
-element of a set to itself, and so on. The plan is to gradually forget
-all this information and instead express all those notions in purely
-categorical terms, that is in terms of objects and arrows.
-
-In the ideal world we would just say that Haskell types are sets and
-Haskell functions are mathematical functions between sets. There is just
-one little problem: A mathematical function does not execute any code
---- it just knows the answer. A Haskell function has to calculate the
-answer. It's not a problem if the answer can be obtained in a finite
-number of steps --- however big that number might be. But there are some
-calculations that involve recursion, and those might never terminate. We
-can't just ban non-terminating functions from Haskell because
-distinguishing between terminating and non-terminating functions is
-undecidable --- the famous halting problem. That's why computer
-scientists came up with a brilliant idea, or a major hack, depending on
-your point of view, to extend every type by one more special value
-called the \newterm{bottom} and denoted by \code{\_|\_}, or
-Unicode $\bot$. This ``value'' corresponds to a non-terminating computation.
-So a function declared as:
+이상적으로는 하스켈의 타입은 집합이고 하스켈의 함수는 집합 사이의 수학적 함수라고 이야기할 수 있다.
+하지만 한가지 작은 문제가 있다. 수학에서의 함수는 어떤 코드도 실행시키지 않고, 단지 그 실행 결과를 알고 있을 뿐이다.
+하스켈의 함수는 답을 계산해야 한다. 만약 답이 유한한 단계 안에 유도될 수 있는 경우라면 이것은 별로 문제가 되지 않는다(물론 단계 수가 많다면 좀 문제가 될 지도 모른다).
+하지만 재귀를 포함하는 연산들도 있고 이 연산들은 어쩌면 종료되지 않을 수도 있다. 이런 종료되지 않는 함수를 하스켈에서 아예 제외하는 것은 불가능하다.
+어떤 함수가 종료되는지 아닌지 여부를 판단하는 문제는 정지 문제라는 이름으로 널리 알려진 결정 불가능한 문제이기 때문이다.
+이를 해결하기 위해 컴퓨터 과학자들은 한가지 놀라운 아이디어, 혹은 관점에 따라 중요한 핵(hack)으로 불리는 특별한 값인 \newterm{\trBottom}을 제안하게 됐다.
+이 값은 모든 타입에 포함되며, \code{\_|\_} 혹은 유니코드 $\bot$으로 적는다. 이 ``값''은 종료되지 않는 연산에 대응된다. 따라서, 함수는 아래와 같이 선언될 수 있다.
 
 \src{snippet02}
-may return \code{True}, \code{False}, or \code{\_|\_};
-the latter meaning that it would never terminate.
+이 함수는 True, False, 혹은 \code{\_|\_}를 리턴할 수 있다. 맨 마지막 타입은 이 함수가 종료되지 않을 수도 있음을 뜻한다.
 
-Interestingly, once you accept the bottom as part of the type system, it
-is convenient to treat every runtime error as a bottom, and even allow
-functions to return the bottom explicitly. The latter is usually done
+흥미롭게도, \trBottom을 타입 시스템의 일부로 받아들이고 나면, 모든 런타임 에러를 \trBottom으로 대하는 것은 아주 편리하게 느껴진다. The latter is usually done
 using the expression \code{undefined}, as in:
 
 \src{snippet03}
