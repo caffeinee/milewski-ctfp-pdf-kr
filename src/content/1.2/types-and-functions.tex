@@ -49,8 +49,7 @@ C++에서 \code{auto}를 이용해 변수를 선언하면 컴파일러가 자동
 하지만 그 사실과는 별개로 프로그래머들은 \trTypeAnnotation\을 사용하려고 하는 경향이 있다.
 왜냐하면 타입 \trAnnotation\은 코드의 의미에 대해 굉장히 많은 것을 말해주고, 컴파일 에러를 더 쉽게 이해할 수 있게 만들어주기 때문이다.
 하스켈에서 타입 설계로부터 프로젝트를 시작하는 것은 흔히 쓰이는 방법이다. 
-\sloppy{Later, type annotations drive the implementation
-and become compiler-enforced comments.}
+\sloppy{이후에, \trTypeAnnotation은 구현을 이끌어 나가며, 컴파일러가 강제하는 코멘트가 된다.}
 
 강한 정적 타입은 코드를 테스트하지 않는 것에 대한 변명거리로 자주 사용된다.
 당신은 하스켈 프로그래머가 ``컴파일이 된다면, 그건 제대로 동작하는 프로그램일 것이다''라고 말하는 것을 몇 번 들은 적이 있을 지도 모른다.
@@ -105,65 +104,51 @@ $\Set$은 아주 특별한 \trCategory다. 왜냐하면 이 \trCategory의 \trOb
 \src{snippet02}
 이 함수는 True, False, 혹은 \code{\_|\_}를 리턴할 수 있다. 맨 마지막 타입은 이 함수가 종료되지 않을 수도 있음을 뜻한다.
 
-흥미롭게도, \trBottom을 타입 시스템의 일부로 받아들이고 나면, 모든 런타임 에러를 \trBottom으로 대하는 것은 아주 편리하게 느껴진다. The latter is usually done
-using the expression \code{undefined}, as in:
+흥미롭게도, \trBottom을 타입 시스템의 일부로 받아들이고 나면, 모든 런타임 에러를 \trBottom으로 대하는 것은 아주 편리하게 느껴진다. 이는 \code{undefined} \trExpression을 사용하면 아래 코드와 같이 쉽게 작성할 수 있다.
 
 \src{snippet03}
-This definition type checks because \code{undefined} evaluates to
-bottom, which is a member of any type, including \code{Bool}. You can
-even write:
+
+이 함수의 타입 정의는 \code{undefined}가 \trBottom으로 평가되고, 이 값이 \code{Bool}을 포함한 임의의 타입에 속하기 때문에 적법한 코드다. 심지어, 이렇게도 쓸 수 있다.
 
 \src{snippet04}
-(without the \code{x}) because the bottom is also a member of the type
-\code{Bool -> Bool}.
 
-Functions that may return bottom are called partial, as opposed to total
-functions, which return valid results for every possible argument.
+(\code{x}가 제거됐다) 왜냐하면, \trBottom 은 \code{Bool -> Bool} 타입에도 속할 수 있기 때문이다.
 
-Because of the bottom, you'll see the category of Haskell types and
-functions referred to as $\Hask$ rather than $\Set$. From
-the theoretical point of view, this is the source of never-ending
-complications, so at this point I will use my butcher's knife and
-terminate this line of reasoning. From the pragmatic point of view, it's
-okay to ignore non-terminating functions and bottoms, and treat
-$\Hask$ as bona fide $\Set$.\footnote{Nils Anders Danielsson,
+\trBottom을 리턴할 수 있는 함수는 \trPartial(partial) 함수라고 불린다. 반대로, 가능한 모든 \trArgument에 대해 올바른 결과값을 내놓는 함수는 \trTotal(total) 함수라고 불린다.
+
+\trBottom으로 인해, 하스켈의 타입과 함수의 \trCategory는 $\Set$ 보다는 $\Hask$로 지칭된다.
+이론적인 측면에서 이것은 끝없는 복잡함의 원천이기 때문에 지금은 이와 관련된 이야기는 적당히 넘기려고 한다. 실용적인 측면에서 종료되지 않는 함수와 \trBottom을 무시하고 $\Hask$를 진짜 $\Set$으로 생각해도 무방하다.
+\footnote{Nils Anders Danielsson,
 John Hughes, Patrik Jansson, Jeremy Gibbons, \href{http://www.cs.ox.ac.uk/jeremy.gibbons/publications/fast+loose.pdf}{
-Fast and Loose Reasoning is Morally Correct}. This paper provides justification for ignoring bottoms in most contexts.}
+Fast and Loose Reasoning is Morally Correct}. 이 논문이 대부분의 맥락에서 \trBottom을 무시하는 것에 대한 타당한 이유를 제시해준다.}
 
-\section{Why Do We Need a Mathematical Model?}
+\section{왜 수학적 모델이 필요한가?}
 
-As a programmer you are intimately familiar with the syntax and grammar
-of your programming language. These aspects of the language are usually
-described using formal notation at the very beginning of the language
-spec. But the meaning, or semantics, of the language is much harder to
-describe; it takes many more pages, is rarely formal enough, and almost
-never complete. Hence the never ending discussions among language
+프로그래머로서 당신은 사용하는 프로그래밍 언어의 문법과 구문에 굉장히 익숙할 것이다.
+언어의 이런 측면들은 보통 언어 스펙의 제일 첫 부분에 formal notation을 이용해서 기술되곤 한다. % formal notation을 뭐라고 번역하는게 좋을까요?
+하지만, 언어의 \trSemantics(semantics)적인 측면은 기술하기가 좀 더 까다롭다. 이는 훨씬 많은 페이지를 필요로 하며, 충분히 형식적이지 못하며, 대부분의 경우 절대 완벽해지지 못한다.
+Hence the never ending discussions among language
 lawyers, and a whole cottage industry of books dedicated to the exegesis
 of the finer points of language standards.
 
-There are formal tools for describing the semantics of a language but,
-because of their complexity, they are mostly used with simplified
-academic languages, not real-life programming behemoths. One such tool
-called \newterm{operational semantics} describes the mechanics of program
-execution. It defines a formalized idealized interpreter. The semantics
-of industrial languages, such as C++, is usually described using
-informal operational reasoning, often in terms of an ``abstract
-machine.''
+% 이쪽 전반적으로 용어 번역이 어렵네요.. 좋은 의견 있으면 말씀해주세요 ㅠㅠ 프로그래밍 언어 관련 단어들의 한국어 번역을 잘 모르겠군요
+언어의 \trSematnics적인 측면을 기술하는 형식화된 도구들이 존재하지만, 그 복잡성 때문에 주로 단순화된 학술 언어에서만 사용되며 실세계의 거대한 프로그래밍 언어에서는 사용되지 않는다.
+그런 도구들 중 하나인 \newterm{\trOperationalSemantics}\는 프로그램 실행 메커니즘을 기술한다. 이 도구는 형식화된 이상적인 인터프리터를 정의한다.
+C++과 같은 산업적인 언어들의 \trSemantics는 보통 ``추상 기계(abstract machine)''과 같은 형식적이지 못한 연산 추론(operational reasoning)을 이용해서 기술한다.
 
-The problem is that it's very hard to prove things about programs using
-operational semantics. To show a property of a program you essentially
-have to ``run it'' through the idealized interpreter.
+문제는 \trOperationalSemantics를 이용해서 프로그램에 관한 증명을 하는 것이 굉장히 어렵다는 점이다. 프로그램의 특성을 보이려면 반드시 이상적인 인터프리터를 통해 프로그램을 ``실행''해 보아야만 한다.
 
-It doesn't matter that programmers never perform formal proofs of
-correctness. We always ``think'' that we write correct programs. Nobody
-sits at the keyboard saying, ``Oh, I'll just throw a few lines of code
-and see what happens.'' We think that the code we write will perform
-certain actions that will produce desired results. We are usually quite
-surprised when it doesn't. That means we do reason about programs we
-write, and we usually do it by running an interpreter in our heads. It's
-just really hard to keep track of all the variables. Computers are good
-at running programs --- humans are not! If we were, we wouldn't need
-computers.
+프로그래머들이 정당성에 관한 형식적 증명을 절대 수행하지 않는다는 점은 문제가 아니다. 우리는 항상 우리가 올바른 프로그램을 작성하고 있는지에 관해 ``생각''한다.
+누구도 키보드 앞에 앉아서 ``음, 적당히 코드 몇 줄 쳐넣은 다음에 무슨 일이 일어나는지 확인해봐야지.''라고 이야기하지는 않는다.
+우리는 우리가 작성한 코드가 원하는 결과를 이끌어내는 일련의 동작을 할 것이라고 생각한다. 작성한 코드가 예상과 다르게 동작하면 보통 우리는 크게 놀라게 된다.
+이말인 즉, 우리는 우리가 짠 프로그램의 동작에 대해 추론하며, 종종 프로그램을 머릿속의 인터프리터를 이용해 실행해본다는 뜻이다.
+모든 변수값들을 추적해나가는 것은 굉장히 힘든 일이고, 컴퓨터는 프로그램을 수행하는데 특화되어있지만 사람은 그렇지 않다.
+우리가 이런 일을 잘 해낼 수 있었다면 컴퓨터가 필요하지 않았을 것이다.
+
+하지만 여기엔 대체제가 있다. 이것은 \newTerm{\trDenotationalSemantics}라고 불린다. 이 도구는 수학에 기반한다.
+\trDenotationalSemantics에서 모든 프로그래밍적 구성은 그것의 수학적 해석(interpretation)으로 주어진다.
+이것을 이용하면, 프로그램의 특성을 증명하고 싶을 때 단순히 수학적 정리(theorem)를 증명하면 된다.
+이런 수학적 증명이 어렵다고 생각할지도 모르지만, 인간은 수천년동안 수학적인 방법들을 만들어왔고
 
 But there is an alternative. It's called \newterm{denotational semantics}
 and it's based on math. In denotational semantics every programming
