@@ -1,6 +1,6 @@
 % !TEX root = ../../ctfp-print.tex
 
-함수와 타입 \trCategory\는  프로그래밍에서 중요한 역할을 담당한다. 그러니 타입이 무엇이고 언제 그것이 필요한지 얘기해보자.
+\lettrine[lhang=0.17]{함}{수}와 타입 \trCategory\는  프로그래밍에서 중요한 역할을 담당한다. 그러니 타입이 무엇이고 언제 그것이 필요한지 얘기해보자.
 
 \section{타입이 누구에게 필요한가?}
 
@@ -155,7 +155,7 @@ C++과 같은 산업적인 언어들의 \trSemantics는 보통 ``추상 기계(a
 
 \src{snippet05}
 
-\trExpression \code{{[}1..n{]}} 는 \code{1} 부터 \code{n}까지의 정수 \trList이다.  \code{product} 함수는 \trList에 속한 모든 원소를 곱해준다. 이건 수학에서의 팩토리얼 정의오 굉장히 유사하다. C언어와 비교해보자.
+\trExpression \code{{[}1..n{]}} 는 \code{1} 부터 \code{n}까지의 정수 \trList이다.  \code{product} 함수는 \trList에 속한 모든 원소를 곱해준다. 이건 수학에서의 팩토리얼 정의와 굉장히 유사하다. C언어와 비교해보자.
 
 \begin{snip}{c}
 int fact(int n) {
@@ -170,79 +170,51 @@ int fact(int n) {
 더 설명이 필요할까?
 
 그래, 이런 비교를 드는게 비열한 짓이라는 걸 인정하겠다. 팩토리얼은 명확한 수학적 표기를 가지고 있는 함수다. 약삭빠른 독자라면 이렇게 물어볼 것이다.
-키보드로부터 문자를 읽어들이거나, 네트워크를 통해 패킷을 보내는 것에 대한 수학적 모델은 뭡니까? 
+키보드로부터 문자를 읽어들이거나, 네트워크를 통해 패킷을 보내는 것에 대한 수학적 모델은 뭡니까? 이 질문은 오랫동안 상당히 난해한 설명을 요구하는 까다로운 질문이었다.
+\trDenotationalSemantics\는 유용한 프로그램을 작성하기 위해 필수적이고 중요한 수많은 작업들에 적합하지 않아 보이고, 반면 \trOperationalSemantics\는 이런 걸 쉽게 다룰 수 있다.
+% computational effect 를 뭐라고 번역하는게 좋을까요?
+돌파구는 \trCategoryTheory에서 나왔다. 유제니오 모지(Eugenio Moggi)는 계산의 영향(computational effect)을 \trMonad에 대응시킬 수 있다는 것을 발견했다.
+이것은 \trDenotationalSemantics의 목숨을 연장시켜주고 순수 함수형 언어를 더 유용하게 만들어주었을 뿐 아니라, 전통적인 방식의 프로그래밍에도 한줄기 빛이 되었다는 것이 밝혀졌다.
+\trMonad에 대해서는 이후에 \trCategory스러운 도구들을 좀 더 다루고 난 후 이야기하겠다.
 
-For the longest time
-that would have been an awkward question leading to a rather convoluted
-explanation. It seemed like denotational semantics wasn't the best fit
-for a considerable number of important tasks that were essential for
-writing useful programs, and which could be easily tackled by
-operational semantics. The breakthrough came from category theory.
-Eugenio Moggi discovered that computational effect can be mapped to
-monads. This turned out to be an important observation that not only
-gave denotational semantics a new lease on life and made pure functional
-programs more usable, but also shed new light on traditional
-programming. I'll talk about monads later, when we develop more
-categorical tools.
+프로그래밍을 위한 수학적 도구를 가지게 되는 것의 가장 중요한 이점은 소프트웨어의 정당성에 대해 형식적 증명을 수행할 수 있게 된다는 것이다.
+이건 일반적인 소비자용 소프트웨어를 작성할 때는 별로 중요해보이지 않지만, 세상에는 실패에 대한 비용이 말도 안되게 크거나, 사람의 목숨이 걸려 있는 영역도 존재한다.
+혹은 의료체계에 관한 웹 어플리케이션을 작성할 때에도 haskell의 표준 라이브러리에 있는 알고리즘과 함수가 정당성에 대한 증명을 수반한다는 것에 감사하게 될 것이다.
 
-One of the important advantages of having a mathematical model for
-programming is that it's possible to perform formal proofs of
-correctness of software. This might not seem so important when you're
-writing consumer software, but there are areas of programming where the
-price of failure may be exorbitant, or where human life is at stake. But
-even when writing web applications for the health system, you may
-appreciate the thought that functions and algorithms from the Haskell
-standard library come with proofs of correctness.
+\section{순수한(pure) 함수와 더러운(dirty) 함수}
 
-\section{Pure and Dirty Functions}
+C++ 혹은 다른 명령형 언어에서 우리가 지칭하는 함수는 수학에서 지칭하는 함수와 다르다. 수학에서의 함수는 단순히 값과 값 사이의 사상(mapping)이다.
 
-The things we call functions in C++ or any other imperative language,
-are not the same things mathematicians call functions. A mathematical
-function is just a mapping of values to values.
+수학적 함수를 프로그래밍 언어로 구현하는 것도 가능하다. 이런 함수에서는, 주어진 입력값으로 출력값을 계산하게 된다.
+어떤 숫자의 제곱을 계산하는 함수는, 입력으로 하나의 숫자를 받은 뒤 그 숫자를 자기자신에게 곱한 값을 돌려줄 것이다.
+이런 함수는 같은 입력이 주어질 경우 호출할 때마다 항상 같은 출력이 나온다는 것이 보장된다.
+주어진 수의 제곱을 계산하는 게 달의 위상을 바꿀 수는 없다.
 
-We can implement a mathematical function in a programming language: Such
-a function, given an input value will calculate the output value. A
-function to produce a square of a number will probably multiply the
-input value by itself. It will do it every time it's called, and it's
-guaranteed to produce the same output every time it's called with the
-same input. The square of a number doesn't change with the phases of the
-Moon.
+또, 수의 제곱을 계산하는 것은 키우는 개에게 맛있는 식사를 제공하는 \trSideEffect를 일으킬 수도 없다. 이런 효과를 일으키는 ``함수''는 수학적 함수로 쉽게 표현되지 못한다.
 
-Also, calculating the square of a number should not have a side effect
-of dispensing a tasty treat for your dog. A ``function'' that does that
-cannot be easily modelled as a mathematical function.
+프로그래밍 언어에서, 같은 입력에 대해 항상 같은 출력을 내놓으며 어떤 \trSideeffect도 가지지 않는 함수를 \newterm{순수 함수}라고 부른다.
+하스켈과 같은 순수한 함수형 언어에서는 모든 함수가 순수하다. 때문에, 이런 언어들에 \trDenotationalSemantics를 부여하고 \trCategoryTheory\를 사용해 모델링할 수 있다.
+다른 언어들의 경우, 언어 기능 중 순수한 부분 집합만 사용하거나 \trSideEffect에 대해서 별개로 생각하게끔 스스로를 강제하는건 항상 가능하다.
+이후에 \trMonad가 모든 종류의 효과(effect)를 어떻게 순수한 함수만 가지고 모델링할 수 있게 해주는지 살펴볼 것이다.
+그래서 수학적 함수만 사용하도록 제약한다 해도 우리는 잃게 되는게 아무것도 없다.
 
-In programming languages, functions that always produce the same result
-given the same input and have no side effects are called \newterm{pure
-functions}. In a pure functional language like Haskell all functions are
-pure. Because of that, it's easier to give these languages denotational
-semantics and model them using category theory. As for other languages,
-it's always possible to restrict yourself to a pure subset, or reason
-about side effects separately. Later we'll see how monads let us model
-all kinds of effects using only pure functions. So we really don't lose
-anything by restricting ourselves to mathematical functions.
+\section{타입의 예시}
 
-\section{Examples of Types}
+타입이 곧 집합이라는 것을 깨닫고 나면, 좀 더 특이한 종류의 타입에 대해서도 생각해 볼 수 있게 된다.
+예를 들어, 공집합에 대응되는 타입은 무엇일까? 아니, 이 타입이 하스켈에서 \code{Void}로 불리긴 하지만, C++의 \code{void}는 공집합이 아니다. 
+하스켈의 \code{Void} 타입에 속하는 값은 존재하지 않는다. \code{Void} 타입을 받는 함수를 정의할 수는 있지만, 이 함수는 절대 호출할 수가 없다.
+이 함수를 호출하기 위해선 \code{Void} 타입의 값을 제공해야 하지만 이 타입에 속하는 값은 존재하지 않기 때문이다. 
+이 함수가 리턴하는 값은 그게 무엇이 됐든 아무런 제약도 존재하지 않는다. 이 함수는 아무 타입의 값이나 리턴할 수 있다(하지만, 호출될 수가 없으니 실제로는 일어날 일이 없을 것이다).
+다르게 표현하자면, 이 함수는 \trPolymorphic 리턴 타입을 가진 함수이다. 하스켈에는 이 함수를 위한 이름이 있다.
 
-Once you realize that types are sets, you can think of some rather
-exotic types. For instance, what's the type corresponding to an empty
-set? No, it's not C++ \code{void}, although this type \emph{is} called
-\code{Void} in Haskell. It's a type that's not inhabited by any
-values. You can define a function that takes \code{Void}, but you can
-never call it. To call it, you would have to provide a value of the type
-\code{Void}, and there just aren't any. As for what this function can
-return, there are no restrictions whatsoever. It can return any type
-(although it never will, because it can't be called). In other words
-it's a function that's polymorphic in the return type. Haskellers have a
-name for it:
 
 \src{snippet06}
-(Remember, \code{a} is a type variable that can stand for any type.)
-The name is not coincidental. There is deeper interpretation of types
-and functions in terms of logic called the Curry-Howard isomorphism. The
-type \code{Void} represents falsity, and the type of the function
-\code{absurd} corresponds to the statement that from falsity follows
-anything, as in the Latin adage ``ex falso sequitur quodlibet.''
+(\code{a}가 임의의 타입을 나타내는 타입 변수라는 사실을 기억하자.)
+이 이름은 우연의 일치가 아니다. 커리-하워드 \trIsomorphism(Curry-Howard Isomorphism)\이라고 불리는, 논리학적 측면에서 함수와 타입에 대한 깊은 이해의 산물이 있다.
+% 이거 번역 어떻게 하죠 ㅠㅠ ex falso sequitur quodlibet가 애매한데 %
+\code{Void} 타입은 거짓을 나타내고, 따라서 \code{absurd} 함수의 타입은, 라틴 격언 ``ex falso sequitur quodlibet''과 마찬 가지로 거짓 가정 뒤에는 임의의 문장이 뒤따를 수 있음을 나타낸다.
+
+다음은 단일 원소를 가진 집합에 대응되는 타입이다. 이 타입은 단 하나의 값만 가질 수 있다.
 
 Next is the type that corresponds to a singleton set. It's a type that
 has only one possible value. This value just ``is.'' You might not
