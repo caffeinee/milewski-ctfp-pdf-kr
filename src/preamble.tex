@@ -1,17 +1,40 @@
 \documentclass[\OPTmodes]{book}
 
 % 용어 모음
+
+% 꼭 \newcommand{}{} % ~~~ 꼴로 써 주셔야 합니다! 
+% 짜놓은 스크립트가 이 사실을 적극적으로 이용합니다.
+% 만약 "이 단어는 매크로 적용하면 안 되겠다"는 게 있다면, % 이후에 $$$$$$$$$$와 같이 써 주세요
+
+% 다른 용어의 일부인 용어들은 되도록 뒤에 와야 합니다.
+% parameter가 formal parameter 앞쪽으로 오게 되면,
+% Formal \trParameter 같은 일이 생깁니다.
+% (이런 경우가 자동적으로 핸들링되게끔 고칠 예정이 있습니다만, 그게 정확히 어찌 하면 좋을지가 조금 막막합니다.)
+
 \newcommand{\trComposition}{합성} % composition
-\newcommand{\trComposability}{합성 가능성} % composability
-\newcommand{\trCategory}{카테고리} % category
 \newcommand{\trCategoryTheory}{카테고리 이론} % category theory
+\newcommand{\trCategory}{카테고리} % category
+\newcommand{\trSideEffect}{사이드 이펙트} % side effect
+\newcommand{\trObject}{객체} % object
+\newcommand{\trArrow}{화살표} % arrow
+\newcommand{\trAssociativity}{결합성} %associativity
+\newcommand{\trIdentityMorphism}{항등사상} % identity morphism
+\newcommand{\trIdentity}{아이덴티티} % identity
+\newcommand{\trMorphism}{사상} % morphism
+\newcommand{\trUnit}{항등원} % unit
+\newcommand{\trFunctionBody}{정의} % $$$$$$$$$$$$$$
+\newcommand{\trExpression}{표현식} % expression
+\newcommand{\trStatement}{문장} % statement
+\newcommand{\trSymbolic}{심볼릭} % symbolic
+\newcommand{\trHigherOrderFunction}{고계 함수} % higher-order function
+\newcommand{\trArgument}{인자} % argument
+\newcommand{\trFormalParameter}{형식 매개 변수} % formal parameter
+\newcommand{\trParameter}{매개 변수} % parameter
+\newcommand{\trComposability}{합성 가능성} % composability
 \newcommand{\trTargetObject}{대상 개체} % target object
-\newcommand{\trArrow}{애로우} % arrow
 \newcommand{\trSourceObject}{원본 개체} % source object
 \newcommand{\trTypeInference}{타입 추론} % type inference
 \newcommand{\trTypeAnnotation}{타입 어노테이션} % type annotation
-\newcommand{\trMorphism}{사상} % morphism
-\newcommand{\trObject}{객체} % object
 \newcommand{\trPolymorphic}{다형적} % polymorphic
 \newcommand{\trBottom}{바텀} % bottom
 \newcommand{\trSemantics}{의미론} % semantics
@@ -19,11 +42,11 @@
 \newcommand{\trTotal}{토탈} % total
 \newcommand{\trOperationalSemantics}{동작 의미론} % operational semantics
 \newcommand{\trDenotationalSemantics}{표기 의미론} % denotational semantics
-\newcommand{\trMonad} % monad
+\newcommand{\trMonad}{모나드} % monad
 \newcommand{\trSourceFunction}{원본 함수} % source function
 \newcommand{\trTargetFunction}{대상 함수} % target function
 \newcommand{\trIsomorphism}{이소모피즘} % isomorphism
-\newcommand{\trPolymorphic}{다형적인} % polymorphic
+%
 
 
 \usepackage[papersize={\OPTpagesize},
