@@ -144,7 +144,7 @@ C++과 같은 산업적인 언어들의 \trSemantics는 보통 ``추상 기계(a
 모든 변수값들을 추적해나가는 것은 굉장히 힘든 일이고, 컴퓨터는 프로그램을 수행하는데 특화되어있지만 사람은 그렇지 않다.
 우리가 이런 일을 잘 해낼 수 있었다면 컴퓨터가 필요하지 않았을 것이다.
 
-하지만 여기엔 대체제가 있다. 이것은 \newTerm{\trDenotationalSemantics}(denotational semantics)라고 불린다. 이 도구는 수학에 기반한다.
+하지만 여기엔 대체제가 있다. 이것은 \newterm{\trDenotationalSemantics}(denotational semantics)라고 불린다. 이 도구는 수학에 기반한다.
 \trDenotationalSemantics에서 모든 프로그래밍적 구성은 그것의 수학적 해석(interpretation)으로 주어진다.
 이것을 이용하면, 프로그램의 특성을 증명하고 싶을 때 단순히 수학적 정리(theorem)를 증명하면 된다.
 이런 수학적 증명이 어렵다고 생각할지도 모르지만, 인간은 수천년동안 수학적 기술을 발전시켜왔고 따라서 이 지식들의 혜택을 많이 받을 수 있다.
@@ -191,7 +191,7 @@ C++ 혹은 다른 명령형 언어에서 우리가 지칭하는 함수는 수학
 
 또, 수의 제곱을 계산하는 것은 키우는 개에게 맛있는 식사를 제공하는 \trSideEffect를 일으킬 수도 없다. 이런 효과를 일으키는 ``함수''는 수학적 함수로 쉽게 표현되지 못한다.
 
-프로그래밍 언어에서, 같은 입력에 대해 항상 같은 출력을 내놓으며 어떤 \trSideeffect도 가지지 않는 함수를 \newterm{순수 함수}라고 부른다.
+프로그래밍 언어에서, 같은 입력에 대해 항상 같은 출력을 내놓으며 어떤 \trSideEffect도 가지지 않는 함수를 \newterm{순수 함수}라고 부른다.
 하스켈과 같은 순수한 함수형 언어에서는 모든 함수가 순수하다. 때문에, 이런 언어들에 \trDenotationalSemantics를 부여하고 \trCategoryTheory\를 사용해 모델링할 수 있다.
 다른 언어들의 경우, 언어 기능 중 순수한 부분 집합만 사용하거나 \trSideEffect에 대해서 별개로 생각하게끔 스스로를 강제하는건 항상 가능하다.
 이후에 \trMonad가 모든 종류의 효과(effect)를 어떻게 순수한 함수만 가지고 모델링할 수 있게 해주는지 살펴볼 것이다.
@@ -213,92 +213,66 @@ C++ 혹은 다른 명령형 언어에서 우리가 지칭하는 함수는 수학
 % 이거 번역 어떻게 하죠 ㅠㅠ ex falso sequitur quodlibet가 애매한데 %
 \code{Void} 타입은 거짓을 나타내고, 따라서 \code{absurd} 함수의 타입은, 라틴 격언 ``ex falso sequitur quodlibet''과 마찬 가지로 거짓 가정 뒤에는 임의의 문장이 뒤따를 수 있음을 나타낸다.
 
-다음은 단일 원소를 가진 집합에 대응되는 타입이다. 이 타입은 단 하나의 값만 가질 수 있다.
-
-Next is the type that corresponds to a singleton set. It's a type that
-has only one possible value. This value just ``is.'' You might not
-immediately recognize it as such, but that is the C++ \code{void}.
-Think of functions from and to this type. A function from \code{void}
-can always be called. If it's a pure function, it will always return the
-same result. Here's an example of such a function:
+다음은 단일 원소를 가진 집합에 대응되는 타입이다. 이 타입은 단 하나의 값만 가질 수 있다. 이 값은 그냥 ``존재한다.''
+바로 인지하지는 못하겠지만 C++의 \code{void}가 바로 이런 타입이다. \code{void} 타입의 값을 받는 함수와 \code{void} 타입의 값을 돌려주는 함수를 생각해보자.
+\code{void}를 받는 함수는 항상 호출 가능하다. 그리고 이 함수가 순수하다면, 이 함수는 항상 같은 값을 출력할 것이다. 아래 코드가 그 예시이다.
 
 \begin{snip}{c}
 int f44() { return 44; }
 \end{snip}
-You might think of this function as taking ``nothing'', but as we've
-just seen, a function that takes ``nothing'' can never be called because
-there is no value representing ``nothing.'' So what does this function
-take? Conceptually, it takes a dummy value of which there is only one
-instance ever, so we don't have to mention it explicitly. In Haskell,
-however, there is a symbol for this value: an empty pair of parentheses,
-\code{()}. So, by a funny coincidence (or is it a coincidence?), the
-call to a function of void looks the same in C++ and in Haskell. Also,
-because of the Haskell's love of terseness, the same symbol \code{()}
-is used for the type, the constructor, and the only value corresponding
-to a singleton set. So here's this function in Haskell:
+이 함수가 ``아무것도'' 받지 않는다고 생각할 수도 있다. 하지만 앞서 다뤘던 것처럼, ``아무것도'' 받지 않는 함수는 절대 호출될 수 없다.
+왜냐하면 ``존재하지 않음''을 나타내는 값은 존재하지 않기 때문이다. 그럼 이 함수는 뭘 받는가?
+개념적으로, 이 함수는 딱 한 종류만 존재하는 더미 값을 받고, 그런 값은 딱 하나만 존재하기 때문에 그걸 굳이 명시하지 않을 뿐인 걸로 볼 수 있다.
+반면 하스켈에서는 이 값을 나타내는, 텅빈 괄호쌍 \code{()} 기호가 있다.
+그래서, 우연히(우연일까?) C++과 하스켈에서 void 함수의 호출은 똑같아 보이게 된다는 점이 재밌다.
+또, 간결함을 좋아하는 하스켈의 특성상 \code{()}는 그 값의 타입, 그 값의 생성자, 그리고 그로 인해 만들어지는 유일한 값을 나타내는 기호 모두로 쓰인다.
+따라서, 하스켈에서 위 C++ 함수는 다음과 같이 쓸 수 있다.
 
 \src{snippet07}
-The first line declares that \code{f44} takes the type \code{()},
-pronounced ``unit,'' into the type \code{Integer}. The second line
-defines \code{f44} by pattern matching the only constructor for unit,
-namely \code{()}, and producing the number 44. You call this function
-by providing the unit value \code{()}:
+첫번째 라인은 \code{f44}가 \code{()} 타입(``유닛(unit)''이라고 발음한다)을 받아 \code{Integer} 타입을 돌려줌을 선언한다.
+두번째 라인은 \code{f44}가 유닛의 유일한 생성자인 \code{()}에 대한 패턴 매칭을 통해 44를 생성함을 정의한다. 이 함수는 유닛 값 \code{()}을 써서 호출할 수 있다.
 
 \begin{snip}{c}
 f44 ()
 \end{snip}
-Notice that every function of unit is equivalent to picking a single
-element from the target type (here, picking the \code{Integer} 44). In
-fact you could think of \code{f44} as a different representation for
-the number 44. This is an example of how we can replace explicit mention
-of elements of a set by talking about functions (arrows) instead.
-Functions from unit to any type $A$ are in one-to-one correspondence with
-the elements of that set $A$.
 
-What about functions with the \code{void} return type, or, in Haskell,
-with the unit return type? In C++ such functions are used for side
-effects, but we know that these are not real functions in the
-mathematical sense of the word. A pure function that returns unit does
-nothing: it discards its argument.
+유닛을 받는 모든 함수는 \trTarget 타입에 속하는 원소 하나를 뽑는 것과 동일하게 생각할 수 있다(여기서는 \code{Integer} 44를 뽑았다).
+\code{f44}를 수 44에 대한 또다른 표현으로 생각할 수도 있다. 이는 집합의 원소들에 대해 명시적으로 다루는 대신 함수 (\trArrow)에 대해 다루는 것으로 변환하는 방법에 대한 예시이기도 하다.
+유닛 타입을 받아 임의의 타입 $A$를 돌려주는 함수는 $A$ 타입의 값과 일대일 대응이 된다.
 
-Mathematically, a function from a set $A$ to a singleton set maps every
-element of $A$ to the single element of that singleton set. For every $A$
-there is exactly one such function. Here's this function for
-\code{Integer}:
+\code{void} 리턴 타입(혹은 하스켈의 경우 유닛 리턴 타입)을 가지는 함수는 어떨까?
+C++에서 이런 함수는 \trSideEffect\를 위해 사용되지만, 수학적으로 봤을 때 이런 것들은 진짜 함수가 아니다.
+유닛을 리턴하는 순수 함수는 아무것도 하지 않는다. 그저 \trArgument\를 버릴 뿐이다.
+
+수학적으로, $A$ 집합과 원소가 하나 뿐인 집합을 대응하는 함수는 $A$ 집합의 모든 원소를 단 하나의 원소에 대응시키게 된다.
+따라서 이런 함수는 모든 $A$의 원소에 대해 단 하나만이 존재할 수 있다. 아래 코드는 \code{Integer}와 유닛을 대응하는 함수이다.
 
 \src{snippet08}
-You give it any integer, and it gives you back a unit. In the spirit of
-terseness, Haskell lets you use the wildcard pattern, the underscore,
-for an argument that is discarded. This way you don't have to invent a
-name for it. So the above can be rewritten as:
+어떤 정수를 주어도, 이 함수는 유닛을 돌려줄 뿐이다. 하스켈은 간결함을 추구하기 때문에, 와일드카드 패턴 문법을 제공한다. 사용하지 않는 \trArgument에 대해 언더스코어(\_)를 쓰는게 가능하다.
+이렇게 하면 사용하지 않는 변수의 이름을 지을 필요가 없다. 따라서 위 코드는 아래와 같이 바꿀 수 있다.
 
 \src{snippet09}
-Notice that the implementation of this function not only doesn't depend
-on the value passed to it, but it doesn't even depend on the type of the
-argument.
+이 함수의 구현은 함수가 넘겨받는 값 뿐만 아니라 그 값의 타입에도 의존적이지 않다.
 
-Functions that can be implemented with the same formula for any type are
-called parametrically polymorphic. You can implement a whole family of
-such functions with one equation using a type parameter instead of a
-concrete type. What should we call a polymorphic function from any type
-to unit type? Of course we'll call it \code{unit}:
+임의의 타입에 대해 동일한 형식으로 구현되는 함수를 \trParameter\trPolymorphic(parametrically polymorphic)이라고 부른다.
+이런 함수족(族)은 구체적인 타입 대신에 타입 \trParameter를 이용하는 하나의 등식을 통해 구현할 수 있다.
+임의의 타입을 유닛 타입에 대응하는 \trPolymorphic 함수를 뭐라고 불러야 할까? \code{unit} 이라고 부르면 충분할 것이다.
+
 
 \src{snippet10}
-In C++ you would write this function as:
+C++의 경우 이 함수는 다음과 같이 작성할 수 있다.
 
 \begin{snip}{cpp}
 template<class T>
 void unit(T) {}
 \end{snip}
-Next in the typology of types is a two-element set. In C++ it's called
-\code{bool} and in Haskell, predictably, \code{Bool}. The difference
-is that in C++ \code{bool} is a built-in type, whereas in Haskell it
-can be defined as follows:
+
+다음으로 살펴볼 타입의 유형은 두 개의 원소를 가진 집합이다. C++의 경우 이는 \code{bool}로 불리고, 하스켈의 경우 물론 \code{Bool}이 된다.
+차이점은 C++의 \code{bool}은 내장(built-in) 타입이지만, 하스켈은 아래와 같이 정의된 타입이라는 것이다.
 
 \src{snippet11}
-(The way to read this definition is that \code{Bool} is either
-\code{True} or \code{False}.) In principle, one should also be able
-to define a Boolean type in C++ as an enumeration:
+(이 정의는 ``\code{Bool}은 \code{True} 혹은 \code{False}다'' 라고 읽을 수 있다.)
+원칙적으로는, C++에서 불린(boolean) 타입은 열거형을 이용해서 다음과 같이 정의할 수도 있다.
 
 \begin{snip}{cpp}
 enum bool { 
@@ -306,24 +280,17 @@ enum bool {
     false
 };
 \end{snip}
-but C++ \code{enum} is secretly an integer. The C++11
-``\code{enum class}'' could have been used instead, but then you
-would have to qualify its values with the class name, as in
-\code{bool::true} and \code{bool::false}, not to mention having to
-include the appropriate header in every file that uses it.
+하지만 C++의 \code{enum}은 내부적으로는 정수형이다. 대신 C++11의 ``\code{enum class}''를 사용할 수도 있겠지만, 이 경우 해당 타입의 값을 쓸 때 항상 클래스 이름을 붙여주어야 한다.
+\code{bool::true} 혹은 \code{bool::false}처럼 말이다. 적절한 헤더를 bool 타입을 쓰는 모든 파일에 포함시켜줘야 한다는 것은 언급할 필요도 없을 것이다.
 
-Pure functions from \code{Bool} just pick two values from the target
-type, one corresponding to \code{True} and another to \code{False}.
+\code{Bool} 타입을 받는 순수 함수는 \code{True} 혹은 \code{False} 둘 중 하나의 값을 골라서 받게 된다.
 
-Functions to \code{Bool} are called \newterm{predicates}. For instance,
-the Haskell library \code{Data.Char} is full of predicates like
-\code{isAlpha} or \code{isDigit}. In C++ there is a similar library
-\code{} that defines, among others, \code{isalpha} and
-\code{isdigit}, but these return an \code{int} rather than a
-Boolean. The actual predicates are defined in \code{std::ctype} and
-have the form \code{ctype::is(alpha, c)}, \code{ctype::is(digit, c)}, etc.
+\code{Bool}을 돌려주는 함수는 \newterm{\trPredicates(predicates)}라고 불린다.
+예를 들어, 하스켈 라이브러리 \code{Data.Char}는 \code{isAlpha} 혹은 \code{isDigit}과 같은 \trPredicates로 가득 차 있다.
+C++의 경우에도 \code{isalpha}와 \code{isdigit}을 정의하는 유사한 라이브러리가 있지만, 이 함수들은 \code{int}를 리턴한다.
+\code{std::ctype}에 정의된 실제 \trPredicates\는 \code{std::ctype}에 정의되어 있으며, \code{ctype::is(alpha, c)}, \code{ctype::is(digit, c)} 등과 같은 형태를 갖고 있다.
 
-\section{Challenges}
+\section{연습문제}
 
 \begin{enumerate}
 \tightlist
@@ -376,8 +343,7 @@ int f(int x) {
 \end{minted}
   \end{enumerate}
 \item
-  How many different functions are there from \code{Bool} to
-  \code{Bool}? Can you implement them all?
+  \code{Bool}을 입력받아 \code{Bool}을 출력하는 함수는 얼마나 다양할까? 이런 함수를 전부 구현할 수 있는가?
 \item
   Draw a picture of a category whose only objects are the types
   \code{Void}, \code{()} (unit), and \code{Bool}; with arrows
