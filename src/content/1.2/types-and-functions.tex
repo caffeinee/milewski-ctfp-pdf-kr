@@ -28,7 +28,7 @@
 
 \section{타입은 \trComposability에 관한 것}
 
-\trCategoryTheory\이란 곧 \trArrow\를 \trCompose하는 것이다. 하지만 어느 두 \trArrow나 합성할 수 있는 것은 아니다. 
+\trCategoryTheory\이란 곧 \trArrow\를 \trComposition하는 것이다. 하지만 어느 두 \trArrow나 \trComposition할 수 있는 것은 아니다. 
 한 \trArrow의 \trTargetObject\는 반드시 다음 \trArrow의 \trSourceObject\와 같아야만 한다.
 프로그래밍에서 우리는 한 함수의 결과를 다른 함수로 전달할 수 있다.
 만약 \trTargetFunction\이 \trSourceFunction에서 만든 데이터를 올바르게 해석할 수 없다면 프로그램은 동작하지 않을 것이다.
@@ -122,10 +122,7 @@ Fast and Loose Reasoning is Morally Correct}. 이 논문이 대부분의 맥락�
 프로그래머로서 당신은 사용하는 프로그래밍 언어의 문법과 구문에 굉장히 익숙할 것이다.
 언어의 이런 측면들은 보통 언어 스펙의 제일 첫 부분에 formal notation을 이용해서 기술되곤 한다. % formal notation을 뭐라고 번역하는게 좋을까요?
 하지만, 언어의 \trSemantics(semantics)적인 측면은 기술하기가 좀 더 까다롭다. 이는 훨씬 많은 페이지를 필요로 하며, 충분히 형식적이지 못하며, 대부분의 경우 절대 완벽해지지 못한다.
-%이 문장 잘 이해가 안 되네요.. 어떻게 번역해야할까요?
-Hence the never ending discussions among language
-lawyers, and a whole cottage industry of books dedicated to the exegesis
-of the finer points of language standards.
+이 때문에 언어에 대한 논의는 끊이질 않고, 언어 표준의 세세한 부분들에 대해 각자가 해석한 내용으로 쓴 책들이 범람해서 산을 이룰 정도가 되는 것이다.
 
 언어의 \trSemantics적인 측면을 기술하는 형식화된 도구들이 존재하지만, 그 복잡성 때문에 주로 단순화된 학술용 언어에서만 사용되며 실세계의 거대한 프로그래밍 언어에서는 사용되지 않는다.
 그런 도구들 중 하나인 \newterm{\trOperationalSemantics}(operational semantics)\는 프로그램 실행 메커니즘을 기술한다. 이 도구는 형식화된 이상적인 인터프리터를 정의한다.
