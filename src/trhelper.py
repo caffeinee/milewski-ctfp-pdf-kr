@@ -16,6 +16,7 @@ for line in d:
 
 tr_list = [x[0] for x in word_list]
 jargon_list = [x[1] for x in word_list]
+print(tr_list)
 for i in word_list:
     print(i)
 
@@ -52,7 +53,7 @@ def two():
     with open(name,"r",encoding = 'utf-8') as f:
         d = f.read()
     criterion_two = re.compile(r'\\tr[A-Za-z]+')
-    for i in [x for x in set(criterion_two.findall(d)) if (x not in jargon_list)]:
+    for i in [x for x in set(criterion_two.findall(d)) if (x not in tr_list)]:
         print("\\newcommand{"+i+"}{} % ")
 
 def db(match_obj):

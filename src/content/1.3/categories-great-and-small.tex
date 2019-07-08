@@ -1,46 +1,46 @@
 % !TEX root = ../../ctfp-print.tex
 
 \lettrine[lhang=0.17]{다}{양한 예시들을} 살펴봄으로써 \trCategory에 대한 감을 잡을 수 있다.
-매우 다양한 모양과 크기의 \trCategory가 있는데, 생각치도 못한 곳에서 \trCategory를 보게 되는 일도 있다.
+매우 다양한 모양과 크기의 \trCategory\가 있는데, 생각치도 못한 곳에서 \trCategory\를 보게 되는 일도 있다.
 간단한 예시부터 시작해보자.
 
-\section{\trObject이 없는 경우}
+\section{\trObject\가 없는 경우}
 
-가장 간단한 \trCategory은 0개의 \trObject, 따라서 0개의 \trMorphism을 가진 \trCategory이다. 
-떼어놓고 본다면 굉장히 쓸쓸한 \trCategory지만, 다른 \trCategory와 같이 본다면 중요할 수 있다.
+가장 간단한 \trCategory\은 0개의 \trObject, 따라서 0개의 \trMorphism\을 가진 \trCategory\이다. 
+떼어놓고 본다면 굉장히 쓸쓸한 \trCategory지만, 다른 \trCategory\와 같이 본다면 중요할 수 있다.
 이를테면, 모든 \trCategory의 \trCategory에서 그렇다 (그런 카테고리는 분명히 있다!)
-공집합이 있어도 좋다면, 빈 \trCategory가 있어도 괜찮지 않은가?
+공집합이 있어도 좋다면, 빈 \trCategory\가 있어도 괜찮지 않은가?
 
 \section{단순그래프}
 
-\trObject를 \trArrow로 이어서 \trCategory를 만들 수 있다.
-임의의 유향그래프에 \trArrow를 추가하여 \trCategory를 만드는 상상을 해 보자.
-먼저, 그래프의 각 노드(!!절점?)에 \trIdentity  \trArrow를 더한다. 
+\trObject\를 \trArrow\로 이어서 \trCategory\를 만들 수 있다.
+임의의 유향그래프에 \trArrow\를 추가하여 \trCategory\를 만드는 상상을 해 보자.
+먼저, 그래프의 각 노드(!!절점?)에 \trIdentity  \trArrow\를 더한다. 
 그 후, 한 \trArrow의 끝점이 다른 \trArrow의 시작점과 겹치는 각 경우에 대해
-(즉, \trComposition가능한 쌍에 대해) \trArrow들을 합성한 것을 추가한다.
-새 \trArrow를 추가할 때마다, 그 \trArrow와 다른 \trArrow들의 \trComposition에 대해서도 생각해야 한다.
-(단, \trIdentity  \trArrow는 고려하지 않는다.)
-보통 무한히 많은 \trArrow가 만들어지게 되는데, 문제는 없다.
+(즉, \trComposition\가능한 쌍에 대해) \trArrow들을 합성한 것을 추가한다.
+새 \trArrow\를 추가할 때마다, 그 \trArrow\와 다른 \trArrow들의 \trComposition에 대해서도 생각해야 한다.
+(단, \trIdentity  \trArrow\는 고려하지 않는다.)
+보통 무한히 많은 \trArrow\가 만들어지게 되는데, 문제는 없다.
 
-위 과정을 다른 관점에서 이렇게도 볼 수 있다. 우리는 그래프의 각 꼭지점마다 \trObject를, 
-합성할 수 있는 변을 이어놓은 것 하나마다 \trMorphism를 가지는 \trCategory를 만들었다.
-(\trIdentityMorphism은 특별히 0개의 변을 이어놓은 것으로 생각할 수도 있다.)
+위 과정을 다른 관점에서 이렇게도 볼 수 있다. 우리는 그래프의 각 꼭지점마다 \trObject\를, 
+합성할 수 있는 변을 이어놓은 것 하나마다 \trMorphism\를 가지는 \trCategory\를 만들었다.
+(\trIdentityMorphism\은 특별히 0개의 변을 이어놓은 것으로 생각할 수도 있다.)
 
-그러한 \trCategory는 주어진 그래프로부터 생성된 \trFreeCategory라고 부른다.
-이러한 \trCategory는 \trFreeConstruction의 예시이다. \trFreeConstruction이란,
-미완성인 구조가 주어지면 이를 확장하여, 그 구조의 성질을 만족시키면서 최소의 (!!item)을 포함하게 하는 것을 말한다.
+그러한 \trCategory\는 주어진 그래프로부터 생성된 \trFreeCategory\라고 부른다.
+이러한 \trCategory\는 \trFreeConstruction의 예시이다. \trFreeConstruction이란, 
+미완성인 구조가 주어지면 이를 확장하여, 그 구조의 성질을 만족시키면서 최소의 (!!item)을 포함하게 하는 것을 말한다. %item 뭐라 번역할까요, 원소? 내용물?
 여기서는 \trCategory의 성질을 만족하게끔 하였다. 
 앞으로 \trFreeConstruction의 예시를 많이 보게 될 것이다.
 
 \section{\trOrder}
 
 이제 완전히 다른 예시를 하나 살펴보자.
-\trMorphism이 \trObject 사이의 관계를 나타내는 \trCategory, 특히 ``같거나 작다''는 관계를 나타내는 \trCategory를 살펴보자.
+\trMorphism\이 \trObject 사이의 관계를 나타내는 \trCategory, 특히 ``같거나 작다''는 관계를 나타내는 \trCategory\를 살펴보자.
 먼저 이것이 정말 카테고리인지를 살펴보자. 
-\trIdentityMorphism은 있는가? 모든 \trObject는 자기 자신보다 같거나 작으므로, 그렇다!
-\trComposition은 있는가? $a \leqslant b$ 이고 $b \leqslant c$ 이면 $a \leqslant c$이므로, 그렇다!
-\trComposition은 \trAssociativity를 만족하는가? 그렇다!
-위와 같은 ``관계''를 가지는 집합은 \newterm{\trPreorder}라고 부르는데, 위와 같은 이유로 \trPreorder는 \trCategory이다.
+\trIdentityMorphism\은 있는가? 모든 \trObject\는 자기 자신보다 같거나 작으므로, 그렇다!
+\trComposition\은 있는가? $a \leqslant b$ 이고 $b \leqslant c$ 이면 $a \leqslant c$이므로, 그렇다!
+\trComposition\은 \trAssociativity\를 만족하는가? 그렇다!
+위와 같은 ``관계''를 가지는 집합은 \newterm{\trPreorder}라고 부르는데, 위와 같은 이유로 \trPreorder\는 \trCategory이다.
 
 다른 더 강한 관계를 사용할 수도 있다. 이를테면, 위 조건에 $a \leqslant b$인 동시에 $b \leqslant a$이면 $a$는 $b$와 같아야 한다는 조건을 추가할 수 있다.
 이를 만족하는 집합을 \newterm{\trPartialOrder}라고 한다.
@@ -48,75 +48,69 @@
 마지막으로, 임의의 두 \trObject사이에 관계가 있다는 조건을 둘 수 있다.
 이 조건을 만족하는 집합을 \newterm{\trLinearOrder} 또는 \newterm{\trTotalOrder}라고 부른다.
 
-위 순서가 있는 집합들을 \trCategory로 보고 성질을 찾아보자.
-\trPreorder는 임의의 \trObject $a$와 $b$사이에 최대 1개의 \trMorphism이 존재하는 \trCategory이다.
-이러한 성질을 만족하는 \trCategory를 ``\trThin''다고 부른다. \trPreorder는 \trThin은 \trCategory이다.
+위 순서가 있는 집합들을 \trCategory\로 보고 성질을 찾아보자.
+\trPreorder\는 임의의 \trObject $a$와 $b$사이에 최대 1개의 \trMorphism\이 존재하는 \trCategory다.
+이러한 성질을 만족하는 \trCategory\를 ``\trThin''다고 부른다. \trPreorder\는 \trThin\은 \trCategory다.
 
 
-A set of \trMorphism s from 
 \trCategory  $\cat{C}$ 내에서 \trObject  $a$ 에서 \trObject  $b$로 가는 \trMorphism의 집합은
 \newterm{\trHomSet}이라고 읽으며, $\cat{C}(a, b)$ (또는 $\mathbf{Hom}_{\cat{C}}(a, b)$)라고 쓴다. 
-즉, 임의의 \trPreorder에 속한 모든 \trHomSet은 공집합이거나, 하나의 원소만을 가진다. 
+즉, 임의의 \trPreorder에 속한 모든 \trHomSet\은 공집합이거나, 하나의 원소만을 가진다. 
 $a$에서 $a$로 가는 \trMorphism의 집합인 $\cat{C}(a, a)$도 예외는 아니며, 이 집합은 어떤 \trPreorder에서든 항등 함수 하나만을 포함한다.
 한편, \trPreorder에는 루프가 있을 수 있다. 이는 \trPartialOrder에는 있을 수 없다.
 
-So every hom-set in a preorder is either
-empty or a singleton. That includes the hom-set $\cat{C}(a, a)$, the set of
-morphisms from $a$ to $a$, which must be a singleton, containing only the
-identity, in any preorder. You may, however, have cycles in a preorder.
-Cycles are forbidden in a partial order.
-
-\trPreorder, \trPartialOrder, \trTotalOrder를 제대로 알아보는 것은 중요하다. 정렬 때문이다.
+\trPreorder, \trPartialOrder, \trTotalOrder\를 제대로 알아보는 것은 중요하다. 정렬 때문이다.
 버블 소트, 퀵 소트, 머지 소트 등의 정렬 알고리즘은 \trTotalOrder상에서만 제대로 작동한다.
-\trPartialOrder는 위상 정렬을 사용하면 정렬할 수 있다.
+\trPartialOrder\는 위상 정렬을 사용하면 정렬할 수 있다.
 
 \section{집합으로써의 \trMonoid}
 
-\trMonoid는 부끄러울 정도로 간단하지만 놀라울 정도로 유용한 개념이다.
-기본적인 사칙연산의 이면에 숨겨진 개념이기도 하다. 덧셈, 곱셈이 각각 \trMonoid를 이루기 때문이다.
-\trMonoid는 프로그래밍에서는 어디서든 찾아볼 수 있다.
-문자열, 리스트, foldable data structures, 동시성 프로그래밍에서 사용하는 퓨쳐(future), functional reactive programming에서의 이벤트(events)
-등의 형태로 \trMonoid를 찾아볼 수 있다.
+\trMonoid\는 부끄러울 정도로 간단하지만 놀라울 정도로 유용한 개념이다.
+기본적인 사칙연산의 이면에 숨겨진 개념이기도 하다. 덧셈, 곱셈이 각각 \trMonoid\를 이루기 때문이다.
+\trMonoid\는 프로그래밍에서는 어디서든 찾아볼 수 있다.
+문자열, 리스트, foldable data structures, 동시성 프로그래밍에서 사용하는 퓨쳐(future), functional reactive programming에서의 이벤트(events) 
+%%%!!!살려주십시오!!! FRP는 멋대로 번역하겠지만, foldable은 뭐라고 해야 할지 도저히 모르겠어요.
+등의 형태로 \trMonoid\를 찾아볼 수 있다.
 
-전통적으로는, \trMonoid는 이항 연산이 있는 집합으로 정의된다. 이 연산은 \trAssociativity를 만족하며, 
+전통적으로는, \trMonoid\는 이항 연산이 있는 집합으로 정의된다. 이 연산은 \trAssociativity\를 만족하며, 
 이 연산에 대해 항등원과 비슷하게 행동하는 특별한 원소가 하나 있으면 된다.
 
-예를 들어, 자연수와 영의 집합과 덧셈에 대해 \trMonoid를 이룬다.
+예를 들어, 자연수와 영의 집합과 덧셈에 대해 \trMonoid\를 이룬다.
 
 \trAssociativity란 다음을 의미한다.
 \[(a + b) + c = a + (b + c)\]
 즉, 수를 더할 때 괄호를 생략해도 괜찮다는 것이다.
 
-\trNeutralElement는 영이다. 왜냐하면,
+\trNeutralElement\는 영이다. 왜냐하면,
 \[0 + a = a\]
 이고
 \[a + 0 = a\]
-이기 때문이다. 여기서 두 번째 식은 첫 번째 식과 같은 말인데, 덧셈이 \trCommutativity를 만족하기 때문이다 ($(a + b
+이기 때문이다. 여기서 두 번째 식은 첫 번째 식과 같은 말인데, 덧셈이 \trCommutativity\를 만족하기 때문이다 ($(a + b
 = b + a)$).
-그러나, \trCommutativity은 \trMonoid의 정의에 포함되어 있지 않다.
-예를 들어서, 문자열 연결(concatenation) 연산은 \trCommutativity를 만족하지 않음에도 \trMonoid를 이룬다.
-참고로 문자열 연결 연산에 대한 \trNeutralElement는 빈 문자열인데, 빈 문자열은 임의의 문자열의 양쪽에 붙어도 그것을 바꾸지 않는다.
+그러나, \trCommutativity\은 \trMonoid의 정의에 포함되어 있지 않다.
+예를 들어서, 문자열 연결(concatenation) 연산은 \trCommutativity\를 만족하지 않음에도 \trMonoid\를 이룬다.
+참고로 문자열 연결 연산에 대한 \trNeutralElement\는 빈 문자열인데, 빈 문자열은 임의의 문자열의 양쪽에 붙어도 그것을 바꾸지 않는다.
 
-하스켈에서는 \code{mempty}라는 \trNeutralElement와 \code{mappend}라는 이항연산이 있는 \trMonoid 타입 클래스를 다음과 같이 선언할 수 있다. 
+하스켈에서는 \code{mempty}라는 \trNeutralElement\와 \code{mappend}라는 이항연산이 있는 \trMonoid 타입 클래스를 다음과 같이 선언할 수 있다. 
 
 \src{snippet01}
-두 개의 \trArgument를 받는 함수의 표현인
+두 개의 \trArgument\를 받는 함수의 표현인
 \code{m -> m -> m}는 처음에는 이상해 보일 수 있으나,
 \trCurrying에 관한 얘기를 하고 나면 완벽하게 말이 됨을 볼 수 있을 것이다. 
-\trArrow를 가진 표현은 기본적으로 두 가지로 해석될 수 있다. 첫째는 다\trArgument 함수, 
-둘째는 하나의 \trArgument를 받아서 함수를 리턴하는 함수이다. 
+\trArrow\를 가진 표현은 기본적으로 두 가지로 해석될 수 있다. 첫째는 다\trArgument 함수, 
+둘째는 하나의 \trArgument\를 받아서 함수를 리턴하는 함수이다. 
 두 번째 해석은 \code{m -> (m -> m)}와 같이 괄호를 써 주면 더 쉽게 볼 수 있으나, 
-애초에 화살표 기초가 우\trAssociative하므로 괄호가 필요가 없다.
+애초에 화살표 기호가 오른쪽부터 \trAssociate하므로 괄호가 필요가 없다.
 이 해석에 대해서는 잠시 후에 다시 돌아와 이야기하도록 한다.
 
 하스켈에서는 \code{mempty}와 \code{mappend}의 \trMonoid 관련 성질을 나태낼 방법이 없음에 주목하라.
-즉, \code{mempty}가 \trNeutralElement이고 \code{mappend}가 \trAssociativity을 만족함을 나타낼 수 없다.
+즉, \code{mempty}가 \trNeutralElement이고 \code{mappend}가 \trAssociativity\을 만족함을 나타낼 수 없다.
 이 성질들이 만족되게끔 하는 것을 프로그래머의 책임이다.
 
 하스켈의 클래스들은 C++ 클래스처럼 intrusive하지 않다.
 새로운 타입을 정의할 때 맨 처음에 클래스를 지정해줄 필요가 없다. 
 주어진 타입이 다른 클래스의 인스턴스라는 점을 훨씬 나중에 선언해도 된다.
-예를 들어, \code{mempty}와 \code{mappend}의 구현을 제공해서 \code{String}를 \trMonoid로 선언해보자.
+예를 들어, \code{mempty}와 \code{mappend}의 구현을 제공해서 \code{String}를 \trMonoid\로 선언해보자.
 (사실 Prelude에 이미 되어 있다.)
 
 \src{snippet02}
@@ -128,13 +122,13 @@ Cycles are forbidden in a partial order.
 \begin{snip}{haskell}
 "Hello " ++ "world!"
 \end{snip}
-또는, 괄호로 싸서 만든 \code{(++)}의 두 \trArgument로 제공해도 된다.
+또는, 괄호로 싸서 만든 \code{(++)}의 두 \trArgument\로 제공해도 된다.
 
 \begin{snip}{haskell}
 (++) "Hello " "world!"
 \end{snip}
-함수에 대한 \trArgument가 쉽표나 괄호로 싸여 있지 않다.
-아마 이 점이 하스켈을 배우면서 가장 적응 안 되는 부분들 중 하나일 것이다.
+함수에 대한 \trArgument\가 쉽표나 괄호로 싸여 있지 않다.
+아마 이 점이 하스켈을 배우면서 가장 적응하기 어려운 부분들 중 하나일 것이다.
 
 하스켈에서는 함수의 ``같음''을 표현할 수 있다는 점도 짚고 넘어가면 좋을 듯 하다. 이를테면 다음과 같다.
 
@@ -146,16 +140,18 @@ mappend = (++)
 \begin{snip}{haskell}
 mappend s1 s2 = (++) s1 s2
 \end{snip}
-전자는 \trCategory $\Hask$(끝나지 않는 계산인 \trBottom을 무시하면 $\Set$)에서의 \trMorphism의 동등성으로 해석할 수 있다.
-이러한 식은 더 간결할 뿐 아니라, 다른 \trCategory로 일반화시킬 수 있다.
-후자는 \newterm{\trExtensional}한 동등성이라고 부르며,
+전자는 \trCategory $\Hask$(끝나지 않는 계산 \trBottom\을 무시하면 $\Set$)에서의 \trMorphism의 동등성으로 해석할 수 있다.
+이러한 식은 더 간결할 뿐 아니라, 다른 \trCategory\로 일반화시킬 수 있다.
+후자는 \newterm{\trExtensional} 동등성이라고 부르며,
 어떤 두 입력 문자열에 대해 \code{mappend}와 \code{(++)}가 같음을 의미한다.
 \trArgument의 값이 가끔 \newterm{점}이라고 불리기도 하므로 (점 $x$에서 함수 $f$의 값), 이러한 표현은 
-\trPointWiseEquality라고 부른다.
-\trArgument를 지정하지 않는 함수의 동등성은 \newterm{\trPointFree}하다고 부른다.
-(우연히도, \trPointFree 식들은 함수의 \trComposition과 자주 관계되곤 하는데, \trComposition은 점을 이용해 표현하므로, 초보자들은 조금 헷갈릴 수도 있다.)
+\trPointWiseEquality\라고 부른다.
+\trArgument\를 지정하지 않는 함수의 동등성은 \newterm{\trPointFree}하다고 부른다.
+(우연히도, \trPointFree 식들은 함수의 \trComposition\과 자주 관계되곤 하는데, \trComposition\은 점을 이용해 표현하므로, 초보자들은 조금 헷갈릴 수도 있다.)
 
-C++에서 \trMonoid 선언과 가장 비슷한 것은 아마 concepts라는 proposed syntax이다. %%%여기
+C++에서 \trMonoid 선언과 가장 비슷한 것은 아마 콘셉트(concepts)라는 proposed syntax이다. 
+%%%proposed syntax...? 제안된 표현법 하면 뉘앙스가 제대로 전해지지 않는 것 같아요ㅠㅠㅠ 검토중인 표현법? 하면 너무 길구...
+%%%그리고 concepts는 
 
 \begin{snip}{cpp}
 template<class T>
@@ -177,11 +173,11 @@ template<class M>
 즉, 값이 경우별로 따로 지정되어야 한다.
 비슷하게, \code{mappend}도 디폴트값이 없다.
 
-\code{Monoid}라는 concept은 
-주어진 타입 \code{M}에 대해 \code{mempty}와 \code{mappend}에 대한 적절한 정의가 존재하는지 테스트하는 \trPredicate이다.
+\code{Monoid}라는 콘셉트는
+주어진 타입 \code{M}에 대해 \code{mempty}와 \code{mappend}에 대한 적절한 정의가 존재하는지 테스트하는 \trPredicatesㅣ다.
 \code{bool} 타입인 것도 이 때문이다.
 
-적절한 오버로드와 specialization을 제공하여서 \trMonoid concept을 인스턴스화할 수 있다.
+적절한 오버로드와 specialization을 제공하여서 \trMonoid 콘셉트\를 인스턴스화할 수 있다.
 
 \begin{snip}{cpp}
 template<>
@@ -192,32 +188,32 @@ std::string mappend(std::string s1, std::string s2) {
 }
 \end{snip}
 
-\section{\trCategory로써의 \trMonoid }
+\section{\trCategory\로써의 \trMonoid }
 
-지금까지는 집합의 원소들을 가지고 ``익숙한'' 방식으로 \trMonoid를 정의해보았다. 
-그러나, \trCategoryTheory에서는 집합과 그 원소들이 아니라, \trObject와 \trMorphism들에 대한 이야기를 한다.
+지금까지는 집합의 원소들을 가지고 ``익숙한'' 방식으로 \trMonoid\를 정의해보았다. 
+그러나, \trCategoryTheory에서는 집합과 그 원소들이 아니라, \trObject\와 \trMorphism들에 대한 이야기를 한다.
 그러므로 우리는 관점을 살짝 바꾸어서, 집합 안에서 여러 가지를 ``움직이''거나 ``하나씩 미는'' 이항연산자를 생각해보자.
 
 이를테면, 모든 자연수에 5를 더하는 연산을 생각해볼 수 있다. 이 연산을 통해 0은 5로, 1은 6으로, 2는 7로 사살된다.
 이는 자연수집합에서 정의된 함수과 같다. 좋다. 이제 함수와 집합이 있다. 
-일반적으로, 어떤 수 n에 대해서도 $n$을 더하는 함수가 있다. 이 함수를 $n$의 \trAdder라고 부른다.
+일반적으로, 어떤 수 $n$에 대해서도 $n$을 더하는 함수가 있다. 이 함수를 $n$의 \trAdder\라고 부른다.
 
-\trAdder는 어떻게 합성할 수 있을까? 5를 더하는 함수와 7을 더하는 함수의 \trComposition은 12를 더하는 함수다.
-즉 \trAdder의 \trComposition과 덧셈에 적용되는 법칙들은 동치나 다름없다. 역시 좋다. 이제 덧셈을 함수의 \trComposition으로 바꾸어 볼 수 있다.
+\trAdder\는 어떻게 합성할 수 있을까? 5를 더하는 함수와 7을 더하는 함수의 \trComposition\은 12를 더하는 함수다.
+즉 \trAdder의 \trComposition\과 덧셈에 적용되는 법칙들은 동치나 다름없다. 역시 좋다. 이제 덧셈을 함수의 \trComposition\로 바꾸어 볼 수 있다.
 
 그러나 이게 끝이 아니다. \trNeutralElement인 영의 \trAdder도 있다. 영을 더한다고 해서 움직여지는 건 아무 것도 없으므로,
-이 \trAdder은 자연수 집합에서의 \trIdentity 함수이다.
+이 \trAdder\은 자연수 집합에서의 \trIdentity 함수이다.
 
 보통의 덧셈 법칙을 나열하는 대신, \trAdder의 법칙을 나열해도 손실되는 정보는 없을 것이다.
-함수의 \trComposition이 \trAssociativity를 만족하므로 \trAdder의 \trComposition도 \trAssociativity을 만족한다는 점을 관찰할 수 있다.
+함수의 \trComposition\이 \trAssociativity\를 만족하므로 \trAdder의 \trComposition도 \trAssociativity\을 만족한다는 점을 관찰할 수 있다.
 또한, \trIdentity 함수에 해당하는 영\trAdder도 있음을 관찰할 수 있다.
 
-일부 머리 좋은 독자는 정수에서 \trAdder로의 사상이, 사실은 \code{mappend}의 타입에 대한 표현인 \code{m -> (m -> m)}로부터 유도될 수 있음을 눈치챘을 것이다.
+일부 머리 좋은 독자는 정수에서 \trAdder\로의 사상이, 사실은 \code{mappend}의 타입에 대한 표현인 \code{m -> (m -> m)}로부터 유도될 수 있음을 눈치챘을 것이다.
 이를 통해서 \code{mappend}가 \trMonoid 집합의 원소를, 그 집합에 작용하는 사상으로 사상한다는 점을 알 수 있다.
 
-이제, 우리가 지금껏 자연수 집합에서 여러 가지를 해왔다는 사실을 잊고, 대신 이 집합을 \trMorphism이(\trAdder가) 많이 달린 \trObject라고 생각하자.
-\trMonoid(monoid)는 단 한 개의 \trObject를 가진 \trCategory이다. 사실 \trMonoid(monoid)라는 단어도 ``하나''를 뜻하는 그리스어 \emph{mono}에서 온 것이다.
-모든 \trMonoid는 단 한 개의 \trObject와, 적절하게 \trComposition에 관련된 법칙들을 따르는 \trMorphism의 집합으로 설명될 수 있다.
+이제, 우리가 지금껏 자연수 집합에서 여러 가지를 해왔다는 사실을 잊고, 대신 이 집합을 \trMorphism\이(\trAdder\가) 많이 달린 \trObject\라고 생각하자.
+\trMonoid(monoid)는 단 한 개의 \trObject\를 가진 \trCategory다. 사실 \trMonoid(monoid)라는 단어도 ``하나''를 뜻하는 그리스어 \emph{mono}에서 온 것이다.
+모든 \trMonoid\는 단 한 개의 \trObject\와, 적절하게 \trComposition에 관련된 법칙들을 따르는 \trMorphism의 집합으로 설명될 수 있다.
 
 \begin{figure}[H]
 \centering
@@ -229,35 +225,35 @@ std::string mappend(std::string s1, std::string s2) {
 이 두 경우 \trComposition 관련 식들이 서로 대칭적이다.
 ``bar'' 뒤에 ``foo''를 붙인 결과와 ``foo'' 앞에 ``bar''를 붙인 결과가 같음을 생각하면 쉽게 납득이 갈 것이다.
 
-이런 질문을 할 수도 있다. 임의의 \trCategory적 \trMonoid(\trObject가 하나인 \trCategory)로, 집합과 이항연산자가 들은 \trMonoid를 유일하게 정의할 수 있을까??
-\trObject가 하나인 \trCategory에서는 항상 집합을 추출해낼 수 있음이 증명되어 있다. 이 집합은 \trMorphism의 집합이고, 위에서 든 예시에서는 \trAdder였다.
+이런 질문을 할 수도 있다. 임의의 \trCategory적 \trMonoid(\trObject\가 하나인 \trCategory)로, 집합과 이항연산자가 들은 \trMonoid\를 유일하게 정의할 수 있을까??
+\trObject\가 하나인 \trCategory에서는 항상 집합을 추출해낼 수 있음이 증명되어 있다. 이 집합은 \trMorphism의 집합이고, 위에서 든 예시에서는 \trAdder였다.
 달리 말하면, \trCategory $\cat{M}$ 내의 유일한 \trObject $m$에 대한 \trHomSet $\cat{M}(m, m)$이 있다. 
-우리는 이 집합에서 이항연산자를 쉽게 정의해낼 수 있다. 집합에 속하는 두 원소의 "모노이드곱"은 각각에 대응되는 \trMorphism의 \trComposition이다.
+우리는 이 집합에서 이항연산자를 쉽게 정의해낼 수 있다. 집합에 속하는 두 원소의 "모노이드곱"은 각각에 대응되는 \trMorphism의 \trComposition\이다.
 $\cat{M}(m, m)$의 원소 중 $f$와 $g$에 각각 대응되는 두 원소의 곱은 그 \trComposition인 $f \circ g$이다.
-이 \trMorphism들의 시작점과 끝 점이 항상 같은 \trObject이므로, \trComposition은 항상 존재한다. %어라? starting point는 용어가 뭐였더라요...?
-또한 \trCategory의 성질에 의해서 이 곱연산은 \trAssociativity를 만족한다. \trIdentityMorphism이 이 곱연산의 \trNeutralElement이다. 
-따라서 우리는 \trCategory\trMonoid로부터 집합 \trMonoid를 만들어낼 수 있다. 어떻게 보든 이 두 가지 \trMonoid는 같은 것이다.
+이 \trMorphism들의 시작점과 끝 점이 항상 같은 \trObject이므로, \trComposition\은 항상 존재한다. %어라? starting point는 용어가 뭐였더라요...?
+또한 \trCategory의 성질에 의해서 이 곱연산은 \trAssociativity\를 만족한다. \trIdentityMorphism\이 이 곱연산의 \trNeutralElement다. 
+따라서 우리는 \trCategory\trMonoid\로부터 집합 \trMonoid\를 만들어낼 수 있다. 어떻게 보든 이 두 가지 \trMonoid\는 같은 것이다.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{images/monoidhomset.jpg}
-\caption{\trMorphism으로써의, 그리고 집합 내의 점들로써 \trMonoid\trHomSet을 볼 수 있다.}
+\caption{\trMorphism\로써의, 그리고 집합 내의 점들로써 \trMonoid\trHomSet\을 볼 수 있다.}
 \end{figure}
 
 \noindent
 수학자들이 걸고 넘어질 수 있는 사소한 문제가 하나 있다. \trMorphism들이 집합을 이루리라는 보장이 없다는 것이다.
-\trCategory의 세계에서는, 집합보다 큰 것들이 존재한다. 임의의 두 \trObject 사이에 존재하는 \trMorphism이 집합을 이루는 \trCategory는 \trLocallySmall하다고 부른다.
-약속한 대로 이런 미묘한 부분들은 무시하고 넘어갈 것이나, 혹시 모르니 일단 적어둔다.
+\trCategory의 세계에서는, 집합보다 큰 것들이 존재한다. 임의의 두 \trObject 사이에 존재하는 \trMorphism\이 집합을 이루는 \trCategory\는 \trLocallySmall다고 부른다.
+약속한 대로 이런 미묘한 부분들은 무시하고 넘어갈 것이나, 혹시 모르니 일단 언급해둔다.
 
-\trCategoryTheory에서 여러 흥미로운 현상들의 근본에는 \trHomSet의 원소들을 \trComposition의 규칙을 따르는 \trMorphism으로도, 집합의 점들로도 볼 수 있다는 사실이 있다.
-$\cat{M}$ 에 포함된 \trMorphism의 \trComposition은 집합 $\cat{M}(m, m)$에서의 모노이드곱으로 변환될 수 있다.
+\trCategoryTheory에서 여러 흥미로운 현상들의 근본에는 \trHomSet의 원소들을 \trComposition의 규칙을 따르는 \trMorphism\으로도, 집합의 점들로도 볼 수 있다는 사실이 있다.
+$\cat{M}$ 에 포함된 \trMorphism의 \trComposition\은 집합 $\cat{M}(m, m)$에서의 모노이드곱으로 변환될 수 있다.
 
 \section{연습문제}
 
 \begin{enumerate}
 \tightlist
 \item
-  다음으로부터 \trFreeCategory를 만들어내시오.  
+  다음으로부터 \trFreeCategory\를 만들어내시오.  
 
   \begin{enumerate}
   \tightlist
@@ -267,9 +263,9 @@ $\cat{M}$ 에 포함된 \trMorphism의 \trComposition은 집합 $\cat{M}(m, m)$�
     하나의 (유향) 변, 그리고 꼭짓점 하나를 가지는 그래프.
     (힌트: 이 변은 자기 자신과 \trComposition될 수 있다.)
   \item
-    두 개의 꼭짓점과 그 사이를 잇는 \trArrow를 가지는 그래프.
+    두 개의 꼭짓점과 그 사이를 잇는 \trArrow\를 가지는 그래프.
   \item
-    한 개의 꼭짓점과, 알파벳 a, b, c \ldots{} z라고 표시된 26개의 \trArrow로 이루어진 그래프
+    한 개의 꼭짓점과, 알파벳 a, b, c \ldots{} z로 표시된 26개의 \trArrow\로 이루어진 그래프
   \end{enumerate}
 \item
   다음은 어떤 \trOrder인가?
@@ -283,10 +279,10 @@ $\cat{M}$ 에 포함된 \trMorphism의 \trComposition은 집합 $\cat{M}(m, m)$�
     \code{T1}은 \code{T2}의 서브클래스이다.
   \end{enumerate}
 \item
-  \code{Bool}은 \code{\&\&} (AND) 연산자와 \code{||} (OR) 연산자에 대해서 각각 하나씩의 (집합론적인) \trMonoid를 이룸을 보이시오.
+  \code{Bool}은 \code{\&\&} (AND) 연산자와 \code{||} (OR) 연산자에 대해서 각각 하나씩의 (집합론적인) \trMonoid\를 이룸을 보이시오.
   \code{Bool}이 \code{True}와 \code{False}으로 이루어진 집합임을 이용하시오.
 \item
-  AND 연산자에 대한 \code{Bool} \trMonoid를 \trCategory로써 표현하시오. \trMorphism들과 각각의 \trComposition 법칙을 나열하시오.
+  AND 연산자에 대한 \code{Bool} \trMonoid\를 \trCategory\로써 표현하시오. \trMorphism들과 각각의 \trComposition 법칙을 나열하시오.
 \item
-  법 3(modulo 3)에 대한 덧셈을 \trMonoid \trCategory로 표현하시오. %법 3이 맞는 표현은 맞는데, 저걸 들었을 때 감이 오시나요?
+  법 3(modulo 3)에 대한 덧셈을 \trMonoid \trCategory\로 표현하시오. %법 3이 맞는 표현은 맞는데, 저걸 들었을 때 감이 오시나요?
 \end{enumerate}
