@@ -1,11 +1,8 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{Y}{ou've seen how to model} types and pure functions as a category. I also
-mentioned that there is a way to model side effects, or non-pure
-functions, in category theory. Let's have a look at one such example:
-functions that log or trace their execution. Something that, in an
-imperative language, would likely be implemented by mutating some global
-state, as in:
+\lettrine[lhang=0.17]{지}{금까지} 어떻게 타입과 순수 함수를 \trCategory로 모델링할 수 있는 지 살펴보았다.
+또 \trCategory에서 순수하지 않은 함수 혹은 \trSideEffect를 모델링하는 방법이 존재한다는 것도 이야기했다.
+이런 예시를 하나 살펴보자. 실행 과정을 추적하고 로그를 남기는 함수의 경우, 명령형 언어에서는 어떤 전역 상태를 조작하는 방식으로 구현될 것이다.
 
 \begin{snip}{cpp}
 string logger;
@@ -15,64 +12,46 @@ bool negate(bool b) {
     return !b;
 }
 \end{snip}
-You know that this is not a pure function, because its memoized version
-would fail to produce a log. This function has \newterm{side effects}.
+이 함수는 메모이제이션할 경우 로그가 발생하지 않게 되기 때문에 순수 함수가 아니다. 이 함수는 \newterm{\trSideEffect}를 가지고 있다.
 
-In modern programming, we try to stay away from global mutable state as
-much as possible --- if only because of the complications of
-concurrency. And you would never put code like this in a library.
+현대 프로그래밍에서는 동시성(Concurrency)이 가진 복잡함 때문에 최대한 전역 상태를 조작하지 않으려고 노력한다. 이런 코드를 라이브러리에 집어넣으면 안 된다.
 
-Fortunately for us, it's possible to make this function pure. You just
-have to pass the log explicitly, in and out. Let's do that by adding a
-string argument, and pairing regular output with a string that contains
-the updated log:
+다행히도, 이 함수를 순수하게 만들 수 있는 방법이 있다. 단순히 로그를 명시적으로 전달받고, 전달해주면 된다. 문자열 인자를 추가하고, 원래 함수의 출력과 갱신된 로그를 묶어서 리턴하게 바꿔보자.
 
 \begin{snip}{cpp}
 pair<bool, string> negate(bool b, string logger) {
     return make_pair(!b, logger + "Not so! ");
 }
 \end{snip}
-This function is pure, it has no side effects, it returns the same pair
-every time it's called with the same arguments, and it can be memoized
-if necessary. However, considering the cumulative nature of the log,
-you'd have to memoize all possible histories that can lead to a given
-call. There would be a separate memo entry for:
+이 함수는 순수하고, \trSideEffect가 없고, 동일한 인자로 호출될 경우 항상 동일한 페어를 리턴한다. 따라서 이 함수는 필요하다면 메모이제이션될 수 있다.
+하지만, 로그가 가진 누적된다(cumulative)는 성질 때문에 이 함수를 메모이제이션하려면 함수를 호출할 때 생길 수 있는 가능한 모든 로그 히스토리들을 다 메모이제이션해야만 할 것이다.
+따라서,
 
 \begin{snip}{cpp}
 negate(true, "It was the best of times. ");
 \end{snip}
-and
+같은 호출과,
 
 \begin{snip}{cpp}
 negate(true, "It was the worst of times. ");
 \end{snip}
-and so on.
+같은 호출, 그 외의 다른 모든 인자들에 대해 모두 따로따로 메모이제이션해야 한다.
 
-It's also not a very good interface for a library function. The callers
-are free to ignore the string in the return type, so that's not a huge
-burden; but they are forced to pass a string as input, which might be
-inconvenient.
+또, 이는 라이브러리 함수로서 그다지 좋은 인터페이스는 아니다. 함수를 호출하는 쪽에서 리턴값의 문자열(로그)은 자유롭게 무시할 수 있기 때문에 이는 그다지 큰 부담이 아니다.
+하지만 로그를 함수의 입력으로 넘겨주는 걸 강제하는데 이게 불편할 수 있다.
 
-Is there a way to do the same thing less intrusively? Is there a way to
-separate concerns? In this simple example, the main purpose of the
-function \code{negate} is to turn one Boolean into another. The
-logging is secondary. Granted, the message that is logged is specific to
-the function, but the task of aggregating the messages into one
-continuous log is a separate concern. We still want the function to
-produce a string, but we'd like to unburden it from producing a log. So
-here's the compromise solution:
+같은 동작을 좀 덜 거슬리게 만들 수 있는 방법은 없을까? 서로 다른 고려사항을 분리하는 방법은 없을까? 이 단순한 예제에서, \code{negate} 함수의 주 목적은 불리언 값을 반대로 뒤집어주는 것이다.
+로그는 보조적인 역할이다. 로그에 추가되는 메시지는 함수에 의해 정해지지만, 그 메시지들을 모아서 하나의 연속된 로그로 만드는 것은 그와는 별개의 문제다.
+함수가 문자열을 생성하길 바라지만, 로그를 생성하는 작업에 대한 부담은 덜어내고 싶다. 따라서, 타협하면 이런 해결책이 나온다.
 
 \begin{snip}{cpp}
 pair<bool, string> negate(bool b) {
     return make_pair(!b, "Not so! ");
 }
 \end{snip}
-The idea is that the log will be aggregated \emph{between} function
-calls.
+로그를 모으는 작업을 함수 호출\emph{사이에} 해주자는 발상이다.
 
-To see how this can be done, let's switch to a slightly more realistic
-example. We have one function from string to string that turns lower
-case characters to upper case:
+이 작업이 어떻게 이뤄질 수 있을지 살펴보기 위해 예제를 좀 더 현실적인 예제로 바꿔보자. 주어진 문자열에서 소문자를 전부 대문자로 바꾸는 함수가 있다.
 
 \begin{snip}{cpp}
 string toUpper(string s) {
@@ -82,15 +61,14 @@ string toUpper(string s) {
     return result;
 }
 \end{snip}
-and another that splits a string into a vector of strings, breaking it
-on whitespace boundaries:
+그리고, 문자열을 공백을 기준으로 여러 개의 문자열로 나누는 함수가 있다.
 
 \begin{snip}{cpp}
 vector<string> toWords(string s) {
     return words(s);
 }
 \end{snip}
-The actual work is done in the auxiliary function \code{words}:
+실제 작업은 \code{words}라는 보조 함수에서 이루어진다.
 
 \begin{snip}{cpp}
 vector<string> words(string s) {
@@ -105,25 +83,20 @@ vector<string> words(string s) {
     return result;
 }
 \end{snip}
-We want to modify the functions \code{toUpper} and \code{toWords} so
-that they piggyback a message string on top of their regular return
-values.
+\code{toUpper} 함수와 \code{toWords} 함수가 그 리턴값에 덧붙여 메시지 문자열을 반환하게 바꿔보자.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.3\textwidth]{images/piggyback.jpg}
 \end{figure}
 \noindent
-We will ``embellish'' the return values of these functions. Let's do it
-in a generic way by defining a template \code{Writer} that
-encapsulates a pair whose first component is a value of arbitrary type
-\code{A} and the second component is a string:
+임의 타입의 요소 및 문자열 요소로 구성된 쌍(pair)을 캡슐화하는 \code{Writer} 템플릿을 정의함으로서 일반화된 방식으로 함수의 리턴값을 ``장식해(embellish)'' 볼 것이다.
 
 \begin{snip}{cpp}
 template<class A>
 using Writer = pair<A, string>;
 \end{snip}
-Here are the embellished functions:
+그리고 이것이 장식된 함수다.
 
 \begin{snip}{cpp}
 Writer<string> toUpper(string s) {
@@ -137,9 +110,8 @@ Writer<vector<string>> toWords(string s) {
     return make_pair(words(s), "toWords ");
 }
 \end{snip}
-We want to compose these two functions into another embellished function
-that uppercases a string and splits it into words, all the while
-producing a log of those actions. Here's how we may do it:
+이제 이 함수들을 합성한 또다른 장식된 함수를 만들어보자. 이 함수는 문자열의 소문자를 모두 대문자로 바꾸고, 이 문자열을 공백을 기준으로 분할한다. 그리고 그 과정에 대한 로그를 생성한다.
+아마 아래와 같은 방식으로 구현할 수 있을 것이다.
 
 \begin{snip}{cpp}
 Writer<vector<string>> process(string s) {
@@ -148,19 +120,15 @@ Writer<vector<string>> process(string s) {
     return make_pair(p2.first, p1.second + p2.second);
 }
 \end{snip}
-We have accomplished our goal: The aggregation of the log is no longer
-the concern of the individual functions. They produce their own
-messages, which are then, externally, concatenated into a larger log.
+이제 원래의 목표를 달성했다. 로그를 모으는 것은 더 이상 개별 함수의 관심사가 아니다. 각 함수는 메시지를 생성하고, 함수 외부에서 그 메시지를 연결해서 더 큰 로그를 만들어낸다.
 
-Now imagine a whole program written in this style. It's a nightmare of
-repetitive, error-prone code. But we are programmers. We know how to
-deal with repetitive code: we abstract it! This is, however, not your
-run of the mill abstraction --- we have to abstract \newterm{function
-composition} itself. But composition is the essence of category theory,
-so before we write more code, let's analyze the problem from the
-categorical point of view.
+이제 프로그램을 전부 이 방식으로 작성했다고 상상해보자. 이 프로그램은 반복되고, 에러에 취약한 코드로 가득찬 끔찍한 형태일 것이다. 하지만 우리는 프로그래머다.
+이런 반복되는 코드를 어떻게 처리해야하는 지 알고 있다. 답은 바로 추상화다!
+% mill abstraction이 무슨 의미일까요?? 찾아봐도 영.. 일단 대충 제가 받아들인 뜻에 맞춰서 번역했어요 %
+하지만 이건 늘상하던 그런 추상화가 아니다.우리는 \newterm{함수\trComposition} 자체를 추상화할 것이다.
+그러나 \trComposition은 \trCategoryTheory의 정수 그 자체이기 때문에, 코드를 짜기 전에 먼저 문제를 \trCategory의 시점에서 분석해보자.
 
-\section{The Writer Category}
+\section{Writer \trCategory}
 
 The idea of embellishing the return types of a bunch of functions in
 order to piggyback some additional functionality turns out to be very
