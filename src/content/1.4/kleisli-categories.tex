@@ -142,20 +142,14 @@ pair<bool, string> isEven(int n) {
 }
 \end{snip}
 \trCategory의 규칙으로 인해, 이 \trMorphism을 \code{bool} \trObject에서 시작하는 다른 \trMorphism과 \trComposition할 수 있어야만 한다.
-특히, 
-By the laws of a category, we should be able to compose this morphism
-with another morphism that goes from the object \code{bool} to
-whatever. In particular, we should be able to compose it with our
-earlier \code{negate}:
+특히, 이 함수를 앞서 작성한 \code{negate}와도 합성이 가능해야 할 것이다.
 
 \begin{snip}{cpp}
 pair<bool, string> negate(bool b) {
     return make_pair(!b, "Not so! ");
 }
 \end{snip}
-Obviously, we cannot compose these two morphisms the same way we compose
-regular functions, because of the input/output mismatch. Their
-composition should look more like this:
+이 두 \trMorphism\를 일반적인 함수를 합성하듯 합성할 수 없다는 것은 명확하다. 입출력이 일치하지 않기 때문이다. 이들의 \trComposition\은 이런 형태가 되어야 한다.
 
 \begin{snip}{cpp}
 pair<bool, string> isOdd(int n) {
@@ -164,29 +158,22 @@ pair<bool, string> isOdd(int n) {
     return make_pair(p2.first, p1.second + p2.second);
 }
 \end{snip}
-So here's the recipe for the composition of two morphisms in this new
-category we are constructing:
+따라서 우리가 만들어낸 이 새로운 \trCategory에서 두 \trMorphism의 \trComposition은 아래와 같이 진행되어야 한다. 
 
 \begin{enumerate}
 \tightlist
 \item
-  Execute the embellished function corresponding to the first morphism
+  첫 번째 \trMorphism에 대응하는 \trEmbellish된 함수를 실행한다.
 \item
-  Extract the first component of the result pair and pass it to the
-  embellished function corresponding to the second morphism
+  실행 결과값 쌍에서 첫번째 요소를 추출한다. 이 값을 두 번째 \trMorphism에 대응하는 \trEmbellish된 함수에 전달한다.
 \item
-  Concatenate the second component (the string) of the first result
-  and the second component (the string) of the second result
+  첫 번째 실행 결과의 두 번째 요소(문자열)과 두 번째 실행 결과의 두번째 요소(문자열)을 연결한다.
 \item
-  Return a new pair combining the first component of the final result
-  with the concatenated string.
+  최종 결과값을 첫번째 요소로, 연결한 문자열을 두 번째 요소로 하는 쌍을 리턴한다.
 \end{enumerate}
 
-If we want to abstract this composition as a higher order function in
-C++, we have to use a template parameterized by three types
-corresponding to three objects in our category. It should take two
-embellished functions that are composable according to our rules, and
-return a third embellished function:
+이 \trComposition을 C++에서 \trHigherOrderFunction으로 추상화하려면, 이 \trCategory의 세 \trObject에 대응하는 세 개의 타입 \trParameter를 사용하는 템플릿을 써야한다.
+이 함수는 우리의 규칙에 따라서 \trComposition 할 수 있는 두 개의 \trEmbellish된 함수를 받아서 세 번째 \trEmbellish된 함수를 반환한다.
 
 \begin{snip}{cpp}
 template<class A, class B, class C>
@@ -200,18 +187,15 @@ function<Writer<C>(A)> compose(function<Writer<B>(A)> m1,
     };
 }
 \end{snip}
-Now we can go back to our earlier example and implement the composition
-of \code{toUpper} and \code{toWords} using this new template:
+이제 이 새로운 템플릿을 이용해 앞서 예제로 다룬 \code{toUpper}와 \code{toWords}의 \trComposition을 구현할 수 있다.
 
 \begin{snip}{cpp}
 Writer<vector<string>> process(string s) { 
     return compose<string, string, vector<string>>(toUpper, toWords)(s);
 }
 \end{snip}
-There is still a lot of noise with the passing of types to the
-\code{compose} template. This can be avoided as long as you have a
-C++14-compliant compiler that supports generalized lambda functions with
-return type deduction (credit for this code goes to Eric Niebler):
+여전히 \code{compose} 템플릿에 타입을 넘겨줘야 하는 귀찮은 부분이 남아 있다.
+이 문제는 일반화된 람다 함수(generalized lambda function)과 리턴 타입 추론을 지원하는 C++ 14 컴파일러를 사용하면 피할 수 있다(아래 코드는 Eric niebler가 작성했다).
 
 \begin{snip}{cpp}
 auto const compose = [](auto m1, auto m2) { 
@@ -222,67 +206,49 @@ auto const compose = [](auto m1, auto m2) {
     };
 };
 \end{snip}
-In this new definition, the implementation of \code{process}
-simplifies to:
+이 새로운 정의 하에서, \code{process}의 구현은 다음과 같이 단순화할 수 있다.
 
 \begin{snip}{cpp}
 Writer<vector<string>> process(string s) {
     return compose(toUpper, toWords)(s);
 }
 \end{snip}
-But we are not finished yet. We have defined composition in our new
-category, but what are the identity morphisms? These are not our regular
-identity functions! They have to be morphisms from type A back to type
-A, which means they are embellished functions of the form:
+하지만 아직 끝난게 아니다. 이 새로운 \trCategory에서의 \trComposition은 정의했지만, 그렇다면 뭐가 \trIdentityMorphism인걸까?
+이는 일반적인 \trIdentityFunction이 아니다. 이 \trCategory는 타입 A에서 타입 A로 돌아오는 \trMorphism을 가져야 한다. 그러니까, 아래와 같은 형태의 \trEmbellish된 함수가 있어야 한다.
 
 \begin{snip}{cpp}
 Writer<A> identity(A);
 \end{snip}
-They have to behave like units with respect to composition. If you look
-at our definition of composition, you'll see that an identity morphism
-should pass its argument without change, and only contribute an empty
-string to the log:
+이는 \trComposition에 대한 \trUnit처럼 동작해야 한다.
+앞서 정의한 \trComposition의 정의를 잘 살펴보면, \trIdentityMorphism은 그 \trArgument를 변화없이 그대로 넘겨주되, 로그에는 텅 빈 문자열을 추가하는 것이 \trIdentityMorphism이 된다는 것을 알 수 있을 것이다.
 
 \begin{snip}{cpp}
 template<class A> Writer<A> identity(A x) {
     return make_pair(x, "");
 }
 \end{snip}
-You can easily convince yourself that the category we have just defined
-is indeed a legitimate category. In particular, our composition is
-trivially associative. If you follow what's happening with the first
-component of each pair, it's just a regular function composition, which
-is associative. The second components are being concatenated, and
-concatenation is also associative.
+이렇게 정의된 \trCategory가 정말로 적법한 \trCategory임은 쉽게 납득할 수 있을 것이다.
+특히, 이 \trCategory에서의 \trCompositon은 결합 법칙이 성립함이 자명하다.
+결과 값 쌍에서의 첫번째 요소만 놓고 보면, 이는 일반적인 함수 합성과 동일하므로 결합 법칙이 성립한다. 두번째 요소의 경우 문자열을 연결하는 연산인데, 이 연산 역시도 결합 법칙이 성립한다.
 
-An astute reader may notice that it would be easy to generalize this
-construction to any monoid, not just the string monoid. We would use
-\code{mappend} inside \code{compose} and \code{mempty} inside
-\code{identity} (in place of \code{+} and \code{""}). There really
-is no reason to limit ourselves to logging just strings. A good library
-writer should be able to identify the bare minimum of constraints that
-make the library work --- here the logging library's only requirement is
-that the log have monoidal properties.
+영악한 독자라면 이러한 구성을 문자열 \trMonoid 뿐 아니라 임의의 \trMonoid로 일반화할 수 있음을 깨달았을 지도 모른다.
+\code{compose} 내에서 \code{mappend}를 쓰고, \code{identity} 내에서 \code{mempty}를 쓸 수 있다(\code{+}와 \code{""} 대신에).
+로깅을 문자열에만 한정 지을 이유는 어디에도 없다. 좋은 라이브러리 작성자는 라이브러리가 동작하게 만들기 위한 가장 기본적인 제한 조건이 무엇인지 판별할 수 있어야 한다.
+여기서 로깅 라이브러리의 유일한 제약 조건은 로그가 \trMonoid의 성질을 가질 것 밖에 없다. % 이거 어떻게 번역하는게 좋을까요.. monoidal이 결합법칙 성립 + 항등원 존재하는 이항 연산 뜻하는 건데..
 
-\section{Writer in Haskell}
+\section{하스켈에서의 Writer}
 
-The same thing in Haskell is a little more terse, and we also get a lot
-more help from the compiler. Let's start by defining the \code{Writer}
-type:
+하스켈에서는 똑같은 함수가 좀 더 간결하고, 컴파일러로부터 더 많은 도움을 받을 수 있다. \code{Writer} 타입을 정의하는 것부터 시작해보자.
 
 \src{snippet01}
-Here I'm just defining a type alias, an equivalent of a \code{typedef}
-(or \code{using}) in C++. The type \code{Writer} is parameterized by
-a type variable \code{a} and is equivalent to a pair of \code{a} and
-\code{String}. The syntax for pairs is minimal: just two items in
-parentheses, separated by a comma.
+여기선 C++에서 \code{typedef}(혹은 \code{using})과 동일한 기능을 하는 타입 별칭만을 정의했다.
+\code{Writer} 타입은 타입변수 \code{a}를 인자로 받으며, \code{a}와 \code{String}의 쌍과 동일하다.
+값의 쌍을 위한 구문은 굉장히 간소하다. 소괄호로 감싼 두 요소 및 그 요소들을 구분하는 콤마(,)만을 사용한다.
 
-Our morphisms are functions from an arbitrary type to some
-\code{Writer} type:
+앞서 다룬 \trMorphism은 임의 타입을 받아 \code{Writer} 타입을 반환하는 함수가 된다.
 
 \src{snippet02}
-We'll declare the composition as a funny infix operator, sometimes
-called the ``fish'':
+\trComposition은 때때로 ``물고기(fish)''로 불리는 재미있는 중위 연산자로 선언할 수 있다.
 
 \src{snippet03}
 It's a function of two arguments, each being a function on its own, and
