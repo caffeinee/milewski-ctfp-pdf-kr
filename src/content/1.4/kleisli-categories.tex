@@ -251,56 +251,40 @@ template<class A> Writer<A> identity(A x) {
 \trComposition은 때때로 ``물고기(fish)''로 불리는 재미있는 중위 연산자로 선언할 수 있다.
 
 \src{snippet03}
-It's a function of two arguments, each being a function on its own, and
-returning a function. The first argument is of the type
-\code{(a -> Writer b)}, the second is
-\code{(b -> Writer c)}, and the result is
-\code{(a -> Writer c)}.
+이 함수는 두 개의 함수를 \trArgument로 받아 새로운 함수를 리턴한다.
+첫번째 \trArgument의 타입은 \code{(a -> Writer b)}이고, 두번째 \trArgument의 타입은 \code{(b -> Writer c)}이고, 리턴값의 타입은 \code{(a -> Writer c)}이다.
 
-Here's the definition of this infix operator --- the two arguments
-\code{m1} and \code{m2} appearing on either side of the fishy
-symbol:
+그리고 이것이 이 중위 연산자의 정의다. 두 \trArgument \code{m1} 과 \code{m2}가 물고기 기호의 양쪽에 나타난다.
 
 \src{snippet04}
-The result is a lambda function of one argument \code{x}. The lambda
-is written as a backslash --- think of it as the Greek letter λ with an
-amputated leg.
+결과값은 \code{x}라는 하나의 \trArgument를 받는 람다 함수가 된다. 람다 함수는 백슬래쉬(\\)를 이용해 작성한다. 백슬래시를 그리스 문자 λ(람다)에서 한쪽 다리를 자른 것처럼 생각하면 된다.
 
-The \code{let} expression lets you declare auxiliary variables. Here
-the result of the call to \code{m1} is pattern matched to a pair of
-variables \code{(y, s1)}; and the result of the call to \code{m2},
-with the argument \code{y} from the first pattern, is matched to
-\code{(z, s2)}.
+\code{let} \trExpression은 보조 변수를 선언할 수 있게 해준다.
+여기서는 \code{m1} 호출의 결과값을 \code{(y, s1)} 변수 쌍으로 패턴 매칭한다.
+그리고 \code{m2}에 \code{y}를 넘겨 호출한 결과는 \code{(z, s2)}로 매칭된다.
 
-It is common in Haskell to pattern match pairs, rather than use
-accessors, as we did in C++. Other than that there is a pretty
-straightforward correspondence between the two implementations.
+C++에서 주로 접근자를 이용하는 것과 달리 하스켈에서는 변수 쌍에 패턴 매칭을 사용하는 것이 일반적이다. 그 외에는 두 구현이 동일하다는 것이 굉장히 명확하다.
 
-The overall value of the \code{let} expression is specified in its
-\code{in} clause: here it's a pair whose first component is \code{z}
-and the second component is the concatenation of two strings,
-\code{s1++s2}.
+\code{let} 표현식의 결과값은 그 표현식의 \code{in} 절에 명시한다. 여기서는 첫번째 요소가 \code{z}이고 두번째 요소가 두 문자열을 이은 결과인 \code{s1++s2}인 변수 쌍이다.
 
-I will also define the identity morphism for our category, but for
-reasons that will become clear much later, I will call it
-\code{return}.
+\trIdentityMorphism 역시도 정의해보자. 이걸 \code{return}이라고 부를 것인데, 왜 이런 이름으로 부르는 지는 나중에 명확해질 것이다.
 
 \src{snippet05}
-For completeness, let's have the Haskell versions of the embellished
-functions \code{upCase} and \code{toWords}:
+마무리로, 하스켈 버전의 \trEmbellish된 \code{upCase}, \code{toWords} 함수를 작성해보자.
 
 \src{snippet06}
-The function \code{map} corresponds to the C++ \code{transform}. It
-applies the character function \code{toUpper} to the string
-\code{s}. The auxiliary function \code{words} is defined in the
-standard Prelude library.
+\code{map} 함수는 C++의 \code{transform}에 대응한다. 이 함수는 문자열 \code{s}의 각 문자에 대해 \code{toUpper}를 적용한다.
+보조 함수 \code{words}는 표준 라이브러리 Prelude에 정의되어 있다.
 
-Finally, the composition of the two functions is accomplished with the
-help of the fish operator:
+마지막으로, 두 함수의 합성은 처음 이야기한 물고기 연산자의 도움을 받아 성사된다.
 
 \src{snippet07}
 
-\section{Kleisli Categories}
+\section{\trKleisli \trCategory}
+
+이 \trCategory를 내가 즉석에서 발명해낸 것이라고 생각하진 않을 것이다.
+이 \trCategory는 \trMonad에 기반한 \trCategory인 \trKleisli\trCategory의 예시중 하나다.
+후린 아직 \trMonad에 대해 이야기할 준비가 되지 않았지만, \trMonad가 무슨 일을 할 수 있는지 살짝 맛만이라도 볼 수 있게 해주고 싶었다.
 
 You might have guessed that I haven't invented this category on the
 spot. It's an example of the so called Kleisli category --- a category
