@@ -284,19 +284,11 @@ C++에서 주로 접근자를 이용하는 것과 달리 하스켈에서는 변�
 
 이 \trCategory를 내가 즉석에서 발명해낸 것이라고 생각하진 않을 것이다.
 이 \trCategory는 \trMonad에 기반한 \trCategory인 \trKleisli\trCategory의 예시중 하나다.
-후린 아직 \trMonad에 대해 이야기할 준비가 되지 않았지만, \trMonad가 무슨 일을 할 수 있는지 살짝 맛만이라도 볼 수 있게 해주고 싶었다.
-
-You might have guessed that I haven't invented this category on the
-spot. It's an example of the so called Kleisli category --- a category
-based on a monad. We are not ready to discuss monads yet, but I wanted
-to give you a taste of what they can do. For our limited purposes, a
-Kleisli category has, as objects, the types of the underlying
-programming language. Morphisms from type $A$ to type $B$ are functions that
-go from $A$ to a type derived from $B$ using the particular embellishment.
-Each Kleisli category defines its own way of composing such morphisms,
-as well as the identity morphisms with respect to that composition.
-(Later we'll see that the imprecise term ``embellishment'' corresponds
-to the notion of an endofunctor in a category.)
+우린 아직 \trMonad에 대해 이야기할 준비가 되지 않았지만, \trMonad가 무슨 일을 할 수 있는지 살짝 맛만이라도 볼 수 있게 해주고 싶었다.
+우리의 제한된 목적을 위해, \trKleisli\trCategory는 그 기저에 깔린 프로그래밍 언어의 타입을 \trObject로 갖는다.
+타입 $A$로부터 타입 $B$로의 \trMorphism은 타입 $A$로 부터 특정한 \trEmbellish를 $B$ 타입에 적용한 타입으로의 함수다. 
+각각의 \trKleisli\trCategory는 이런 \trMorphism을 \trComposition하기 위한 고유의 방법을 이 \trComposition의 \trIdentityMorphism과 함께 정의한다.
+(나중에 우리는 모호한 ``\trEmbellish'' 라는 용어가 \trCategory에서 \trEndofunctor의 개념과 동일하다는 것을 알게 될 것이다.)
 
 The particular monad that I used as the basis of the category in this
 post is called the \newterm{writer monad} and it's used for logging or
